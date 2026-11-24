@@ -84,7 +84,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 ## 6. Code map
 
 ```
-src/app/layout.tsx        Fonts (Ascendant via next/font/local, Hanken via Google), metadata, "js" class script
+src/app/layout.tsx        Hanken via next/font/google, metadata, "js" class script (Ascendant is a CSS @font-face in globals.css)
 src/app/page.tsx          Homepage: <HomePage hero={<Hero />} />
 src/app/globals.css       Hallmark stamp, tokens, hero wash/rings/floaters, section labels, buttons, reveal, reduced motion
 src/components/home-page.tsx  Nav + sections + footer + floating WhatsApp button
@@ -97,7 +97,7 @@ src/components/reveal.tsx Scroll fade-in; content stays visible without JavaScri
 src/components/hero-options.tsx  The three hero options for /hero-1..3
 src/lib/site.ts           ALL content and clinic details (edit here first)
 src/app/draft/            Self-contained redesign draft (own CSS scoped to [data-theme="thraya-draft"])
-src/fonts/ascendant/      Ascendant Serif PERSONAL-USE files (git-ignored, local only) + README
+public/fonts/ascendant/   Ascendant Serif PERSONAL-USE files (git-ignored, local only) + README
 THRAYA-BRIEF.md           Content and brand brief with no design choices (for Claude Design or a redesign)
 README.md                 Developer README
 .hallmark/                Hallmark audit records and build log
@@ -109,6 +109,7 @@ README.md                 Developer README
 - **Tailwind v4 `@theme inline` does not emit CSS variables** for direct `var()` use. The `.display` class points straight at `var(--font-heading)`, not `var(--font-display)`.
 - Don't name a font variable `--font-serif`: it clashes with Tailwind's own.
 - **The dev server sometimes serves stale CSS** after edits to `globals.css` (new tokens or `@font-face`). Fix: stop the server, `rm -rf .next`, start again.
+- **Ascendant Serif is loaded with a CSS `@font-face`** (in `globals.css`, files in `public/fonts/ascendant/`), not `next/font/local`, so a missing file can't break `next build` (it did on Vercel once). `--font-heading` is set on `:root` to "Ascendant Serif".
 - **Ascendant Serif personal-use files have blank glyphs** for `& / ( ) + ' ? ! : -`. A `"Heading Symbols"` `@font-face` in `globals.css` (local Georgia, Times or Noto Serif, limited by `unicode-range`) fills them. Remove it once licensed files are in.
 - **Reveal animations** hide content only under the `.js` class set by a `beforeInteractive` script, so the page works with scripts off. A dev-only React warning about the script tag is expected.
 - In the `/draft` CSS, base element rules use `:where(.draft)` so component classes win. (A specificity bug once made the green button's text dark.)
@@ -116,7 +117,7 @@ README.md                 Developer README
 
 ## 8. Open items before launch
 
-- [ ] Ascendant Serif commercial / web licence and licensed files. The font files are git-ignored (`src/fonts/ascendant/*.otf`); a fresh clone must add them locally or the build fails, and production needs them from a private source
+- [ ] Ascendant Serif commercial / web licence and licensed files. The font files are git-ignored (`public/fonts/ascendant/*.otf`), so Vercel builds currently show a fallback serif for headings; once licensed, commit them or serve them from storage
 - [ ] Confirm +91 80892 49962 takes calls
 - [ ] Opening hours, email (optional)
 - [ ] Real photos: Dr. Ardhra's portrait, the clinic room, the exterior
@@ -139,3 +140,4 @@ README.md                 Developer README
 - **2026-11-24** README rewritten for GitHub; this CLAUDE.md created as the portable project memory.
 - **2026-11-24** Ascendant Serif font files git-ignored so the personal-use licence isn't breached on GitHub; setup step added to README.md and the font folder README.
 - **2026-11-24** Project committed and pushed to https://github.com/kewal8/Thraya (`main`).
+- **2026-11-24** Vercel build failed (font file not found, since the fonts are git-ignored). Switched Ascendant from `next/font/local` to a CSS `@font-face` from `public/fonts/ascendant/`; builds now pass without the files (headings fall back to a serif on Vercel until licensed files are added).

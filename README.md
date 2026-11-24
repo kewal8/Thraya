@@ -10,13 +10,13 @@ It is a single-page site with no database or login. Visitors book a consultation
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Motion](https://motion.dev) for the mobile menu animation
 - [Phosphor Icons](https://phosphoricons.com)
-- Fonts: Ascendant Serif (headings, self-hosted) and Hanken Grotesk (body, via `next/font/google`)
+- Fonts: Ascendant Serif (headings, CSS `@font-face` from `public/fonts/ascendant/`) and Hanken Grotesk (body, via `next/font/google`)
 
 ## Getting started
 
 Requires Node.js 20 or later.
 
-**Add the heading font first.** The Ascendant Serif files are not in the repository (see [Fonts and licensing](#fonts-and-licensing)). Copy these three files into `src/fonts/ascendant/`, or the build will fail:
+**Heading font (optional for running).** The Ascendant Serif files are not in the repository (see [Fonts and licensing](#fonts-and-licensing)). The site builds and runs without them, with headings in a fallback serif. To see the real font, copy these three files into `public/fonts/ascendant/`:
 
 - `AscendantSerif-PersonalUse-Regular.otf`
 - `AscendantSerif-PersonalUse-Medium.otf`
@@ -68,8 +68,8 @@ src/
     home-page.tsx      Assembles the homepage sections
   lib/
     site.ts            All clinic details and page content
-  fonts/ascendant/     Ascendant Serif files (see Fonts and licensing)
 public/brand/          Logo
+public/fonts/ascendant/  Ascendant Serif files, git-ignored (see Fonts and licensing)
 THRAYA-BRIEF.md        Content and brand brief (no design choices), for redesign work
 ```
 
@@ -104,15 +104,15 @@ Spelling: always "Homeopathy" / "Homeopathic", never "Homoeopathy".
 
 ## Fonts and licensing
 
-**Ascendant Serif** (EF Studio, [efstudiotype.com](https://efstudiotype.com/)) is used for headings. The files in `src/fonts/ascendant/` are the **personal-use** versions, included for preview only.
+**Ascendant Serif** (EF Studio, [efstudiotype.com](https://efstudiotype.com/)) is used for headings. It is loaded with a plain CSS `@font-face` in `src/app/globals.css` from `public/fonts/ascendant/`, so a missing file never breaks the build: the browser falls back to a serif. The local files are the **personal-use** versions, for preview only.
 
 Before the site goes live:
 
 1. Buy a commercial / web licence at [efstudiotype.com/license](https://efstudiotype.com/license/).
-2. Replace the three files with the licensed ones (Regular 400, Medium 500, Bold 700) and update the paths in `src/app/layout.tsx`.
+2. Put the licensed files (Regular 400, Medium 500, Bold 700) in `public/fonts/ascendant/` and update the file names in the `@font-face` rules in `src/app/globals.css` if they differ.
 3. Remove the "Heading Symbols" `@font-face` in `globals.css`. It fills punctuation (`& / ( ) + ' ? ! : -`) missing from the personal-use files.
 
-The font files are listed in `.gitignore` and are never committed. Each machine adds them to `src/fonts/ascendant/` locally. On a hosting platform such as Vercel, add the licensed files through a private source (a private repository, or the host's file storage) rather than this repository.
+The font files are listed in `.gitignore` and are never committed, so deployments built from this repository (for example on Vercel) currently show the fallback serif for headings. Once you hold a web licence, you may commit the licensed files (remove the ignore rule for them) or deliver them from the font provider's or your own storage.
 
 ## Before launch
 

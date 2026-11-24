@@ -98,6 +98,37 @@ body {
 }
 
 /*
+  Ascendant Serif (EF Studio) for headings, loaded from /public/fonts/ascendant.
+  The files are git-ignored (personal-use licence), so a deploy without them still builds
+  and the headings fall back to a system serif. Add the licensed files there before launch.
+*/
+@font-face {
+  font-family: "Ascendant Serif";
+  src: url("/fonts/ascendant/AscendantSerif-PersonalUse-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ascendant Serif";
+  src: url("/fonts/ascendant/AscendantSerif-PersonalUse-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ascendant Serif";
+  src: url("/fonts/ascendant/AscendantSerif-PersonalUse-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: "Ascendant Serif";
+}
+
+/*
   Ascendant Serif personal-use files ship without some punctuation (& / ( ) + ' ? ! : -).
   For preview, those characters alone come from a system serif. Remove once the licensed files are in.
 */
