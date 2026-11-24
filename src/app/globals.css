@@ -1,26 +1,253 @@
+/* Hallmark · checked: 2026-11-22 · genre: editorial (inferred)
+ * floor: fixed 62, 54, 48, 34, 27, 50, 58, 20 · reflex fixed: 6b, 29, 38iii, 3, 11, 69, 26b · nav: wordmark left, five links, one action · footer: dark mast, logo over two link columns
+ * built: the project · redesign: restyle · v2.0.0 */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+  Thraya Homeopathy design tokens.
+  Palette comes from the logo: forest green figure, clay heart, gold mind.
+  Light theme only: the brand mark is dark green on transparent.
+*/
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: #f6f6f1;
+  --color-surface: #fdfdfa;
+  --color-tint: #eaefe4;
+  --color-line: #d9ded2;
+  --color-ink: #17251c;
+  --color-muted: #55635a;
+  --color-forest: #1f5a33;
+  --color-forest-deep: #133822;
+  --color-sage: #9bb8a2;
+  --color-clay: #b4553d;
+  --color-clay-soft: #f5e6df;
+  --color-gold: #c9962c;
+  --color-gold-ink: #8a6413;
+  --color-gold-soft: #f6eccf;
+  --color-gold-wash: #faf5e6;
+  --color-leaf-soft: #dfeadb;
+
+  --shadow-card: 0 1px 2px rgb(19 56 34 / 0.04), 0 14px 34px -18px rgb(19 56 34 / 0.22);
+  --shadow-float: 0 2px 6px rgb(19 56 34 / 0.06), 0 22px 44px -18px rgb(19 56 34 / 0.32);
+  --shadow-fab: 0 10px 30px -8px rgb(19 56 34 / 0.45);
+
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-serif, Georgia, serif;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  caret-color: var(--color-forest);
+  scrollbar-color: var(--color-sage) var(--color-paper);
+}
+
+::selection {
+  background: var(--color-tint);
+  color: var(--color-forest-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scroll reveal: visible by default, hidden only once the layout script has set .js */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms var(--ease-out-soft) var(--reveal-delay, 0s),
+    transform 700ms var(--ease-out-soft) var(--reveal-delay, 0s);
+}
+
+/* Hero entrance: a self-running CSS animation, so it needs no script */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+.rise {
+  animation: rise 900ms var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+  Ascendant Serif personal-use files ship without some punctuation (& / ( ) + ' ? ! : -).
+  For preview, those characters alone come from a system serif. Remove once the licensed files are in.
+*/
+@font-face {
+  font-family: "Heading Symbols";
+  src: local("Georgia"), local("Times New Roman"), local("Noto Serif"), local("NotoSerif-Regular"),
+    local("DejaVu Serif"), local("Droid Serif");
+  unicode-range: U+0021, U+0026-0029, U+002B, U+002D, U+002F, U+003A, U+003F, U+2018-2019;
+}
+
+/* Hero: warm paper lit softly in the logo's three colours. */
+.hero-wash {
+  background:
+    radial-gradient(55% 45% at 50% 0%, var(--color-gold-soft), transparent 72%),
+    radial-gradient(40% 45% at 0% 95%, var(--color-leaf-soft), transparent 70%),
+    radial-gradient(35% 40% at 100% 85%, var(--color-clay-soft), transparent 70%),
+    var(--color-paper);
+}
+
+.hero-rings {
+  width: min(64rem, 120vw);
+  aspect-ratio: 1;
+}
+.hero-rings span {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--color-forest) 9%, transparent);
+}
+.hero-rings span:nth-child(1) {
+  width: 46%;
+  height: 46%;
+}
+.hero-rings span:nth-child(2) {
+  width: 70%;
+  height: 70%;
+}
+.hero-rings span:nth-child(3) {
+  width: 94%;
+  height: 94%;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+.floater {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Small section label: sentence case, the brand gold line leading in. */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-forest);
+}
+.section-label.on-dark {
+  color: var(--color-gold);
+}
+.section-label::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rise,
+  .floater {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .lift:hover,
+  .btn:hover svg,
+  .btn:active {
+    transform: none !important;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8 lg:px-10;
+  }
+
+  .display {
+    font-family: "Heading Symbols", var(--font-heading), ui-serif, Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    min-width: 0;
+  }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[0.95rem] font-semibold whitespace-nowrap transition-[transform,background-color,border-color,color] duration-300 ease-out-soft active:scale-[0.98];
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-forest text-white hover:bg-forest-deep;
+  }
+
+  /* One hover signal per button: the icon moves, the fill deepens with it. */
+  .btn svg {
+    transition: transform 300ms var(--ease-out-soft);
+  }
+  .btn:hover svg:last-child:not(:first-child) {
+    transform: translateX(3px);
+  }
+  .btn:hover svg:first-child:not(:last-child) {
+    transform: scale(1.1);
+  }
+
+  /* The one card hover: a small lift, only on cards that respond to nothing else. */
+  .lift {
+    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+  }
+
+  .field {
+    @apply min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink transition-colors duration-200 hover:border-sage focus:border-forest focus:outline-none focus:ring-4 focus:ring-tint disabled:cursor-not-allowed disabled:opacity-50;
+  }
 }

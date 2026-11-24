@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ascendant Serif personal-use font files: licensed for local preview only, never published.
+# Add the files (or the licensed web versions) to src/fonts/ascendant/ locally; see the README there.
+/src/fonts/ascendant/*.otf
+/src/fonts/ascendant/*.woff
+/src/fonts/ascendant/*.woff2
