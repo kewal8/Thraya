@@ -15,6 +15,7 @@ Last updated: 2026-11-24
 - **Deliverable:** a single landing page. Next.js, no database, no login. Booking happens on WhatsApp.
 - **Audience:** families in Bengaluru, especially women and parents; most visitors are on phones.
 - **Built by:** Kewal (credited in the footer: "Designed and developed by Kewal").
+- **Repository:** https://github.com/kewal8/Thraya (branch `main`). Font files are not in it (git-ignored).
 - **The person giving direction** is a senior UI/UX designer relaying the client's feedback.
 
 ## 2. Clinic facts (use exactly)
@@ -137,3 +138,4 @@ README.md                 Developer README
 - **2026-11-24** Hallmark audit of the homepage; full redesign draft built at `/draft` (Atelier direction, brand kept). Homepage untouched.
 - **2026-11-24** README rewritten for GitHub; this CLAUDE.md created as the portable project memory.
 - **2026-11-24** Ascendant Serif font files git-ignored so the personal-use licence isn't breached on GitHub; setup step added to README.md and the font folder README.
+- **2026-11-24** Project committed and pushed to https://github.com/kewal8/Thraya (`main`).
