@@ -61,17 +61,31 @@ export function Hero() {
 
         <div className="container-page relative flex flex-col items-center pb-16 pt-20 text-center sm:pb-20 sm:pt-28 lg:pb-24 lg:pt-32">
           <h1 className="rise display text-forest-deep" style={rise(0)}>
-            <span className="block text-[2.75rem] sm:text-[4rem] lg:text-[4.5rem]">
-              Personalised homeopathic care
+            <span className="block text-[2.1rem] leading-[1.1] sm:text-[4rem] lg:text-[4.5rem]">
+              Gentle Healing,
             </span>
-            <span className="mt-2 block text-[1.6rem] leading-tight text-forest sm:mt-3 sm:text-[2.2rem] lg:text-[2.6rem]">
-              for women, men, children &amp; the entire family.
+            <span className="block text-[2.1rem] leading-[1.1] text-forest sm:text-[4rem] lg:text-[4.5rem]">
+              Personalised for You
             </span>
           </h1>
 
-          <p className="rise mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl" style={rise(0.1)}>
-            Gentle, individualised treatment for acute and chronic health concerns, led by
-            Dr.&nbsp;Ardhra&nbsp;C.
+          <p
+            className="rise display mt-5 max-w-2xl text-[1.25rem] leading-snug text-ink/80 sm:mt-6 sm:text-[1.75rem]"
+            style={rise(0.06)}
+          >
+            To Restore Balance, Relieve Symptoms and Support Lasting Health
+          </p>
+
+          <div className="rise mt-6 flex w-full max-w-2xl items-center gap-2 sm:mt-7 sm:gap-4" style={rise(0.1)}>
+            <span aria-hidden className="h-px flex-1 bg-forest/25" />
+            <p className="display shrink-0 whitespace-nowrap rounded-full bg-leaf-soft px-3 py-1.5 text-[0.82rem] text-forest-deep sm:px-6 sm:py-2 sm:text-[1.2rem]">
+              for Women, Men, Children &amp; the Entire Family
+            </p>
+            <span aria-hidden className="h-px flex-1 bg-forest/25" />
+          </div>
+
+          <p className="rise mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl" style={rise(0.14)}>
+            Individualised care for acute and chronic concerns, led by Dr.&nbsp;Ardhra&nbsp;C.
           </p>
 
           <div className="rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={rise(0.18)}>
