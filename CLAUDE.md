@@ -70,7 +70,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 3. **Trust band:** dark green strip with four facts and gold icons: 10+ years, MD (Hom.), All ages, Germany & France.
 4. **Our approach:** label, two-tone heading "Care that sees / the whole person.", the client's approach copy, then three white cards (Body, Mind, Spirit) with dark green icon tiles.
 5. **What we treat:** centred two-tone heading; eight condition cards (two columns on phones) with icon tiles, group label and an "Ask about this" WhatsApp link; a dark green "Not sure if your concern is covered?" band.
-6. **Know your doctor:** portrait (placeholder), name, bio, two figures ("10+ years", "Women & children"), and credential cards with icon tiles.
+6. **Know your doctor:** empty portrait frame (tinted, until the real photo arrives), name, bio, two figures ("10+ years", "Women & children"), and credential cards with icon tiles.
 7. **Why Thraya:** dark green section, two-tone heading "Gentle medicine, / chosen for you.", a photo of amber remedy bottles with white flowers (`public/images/remedy-bottles.webp`, supplied by the user; portrait on desktop, 4:3 on phones), and a 2x2 grid of cards with gold icon tiles (medicines from Germany & France, personalised plans, time to listen, care for every age).
 8. **Your first visit:** four step cards (Book, Talk, Begin treatment, Review) with numbered icon circles on a gold wash.
 9. **FAQ:** two-tone heading, card-style accordion, and a dark "Still have a question?" card with an "Ask on WhatsApp" button.
@@ -80,7 +80,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 13. A floating WhatsApp button (bottom right) opens a chat directly.
 
 ### Placeholders still in use
-- Photos are stock: Unsplash (family, doctor); the Why Thraya remedy-bottles photo was supplied by the user (source and licence not confirmed) and one Wikimedia still life on `/draft`. The doctor portrait is a stand-in.
+- The doctor portrait frame is empty on every route (stock photo removed before going live). The footer's "Placeholder photos from Unsplash" note was removed. The Why Thraya remedy-bottles photo was supplied by the user (source and licence not confirmed). One Wikimedia still life remains on `/draft`.
 - FAQ answers, condition notes, the steps and the body/mind/spirit lines are drafts awaiting Dr. Ardhra's review.
 
 ## 6. Code map
@@ -154,3 +154,4 @@ README.md                 Developer README
 - **2026-11-24** Hero text replaced with the client's mock copy ("Gentle Healing, Personalised for You", the "To Restore Balance…" subline, the family pill and the shorter description). Layout and buttons unchanged; mobile sizes tuned so each headline line fits on one row from 360px.
 - **2026-11-25** Why Thraya photo replaced: the Unsplash stethoscope-and-globules image became the user-supplied remedy-bottles photo (`public/images/remedy-bottles.webp`, `photos.remedies` in site.ts); its frame is 4:5 on desktop and anchored to the bottom so the bottle and dropper are never cropped.
 - **2026-11-25** Impeccable pass: PRODUCT.md written. Two full redesigns built with the same copy, homepage untouched: Copy 1 at `/v1` (refined warm direction, Gambetta) and Copy 2 at `/v2` ("The Clinic Card", Erode, chosen by the user from an Impeccable direction round). Both went through two independent finish-review rounds; fixes applied. Open: self-hosting the fonts, Copy 2 tab labels, DESIGN.md, picking a direction.
+- **2026-11-25** Doctor stock photo removed ahead of going live: the portrait frame is now empty on `/`, `/v1`, `/v2` and `/draft`; Unsplash placeholder notes removed from the footers.

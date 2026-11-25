@@ -2,7 +2,7 @@
 // Draft redesign (Hallmark, Atelier with the Thraya brand kept). The live homepage is untouched.
 import type { Metadata } from "next";
 import Image from "next/image";
-import { faqs, nav, photos, site, triad, waLink } from "@/lib/site";
+import { faqs, nav, site, triad, waLink } from "@/lib/site";
 import { BookingCard } from "./booking-card";
 import { ConditionsSwitcher } from "./conditions-switcher";
 import "./draft.css";
@@ -165,7 +165,6 @@ export default function Draft() {
               <div className="d-stock d-mat">
                 {/* Placeholder portrait. Replace with Dr. Ardhra's photograph (900 x 1125). */}
                 <div className="d-mat__img" data-slot="doctor" data-alt="Dr. Ardhra C">
-                  <img src={photos.doctor} alt="Portrait placeholder for Dr. Ardhra C" loading="lazy" />
                 </div>
               </div>
               <figcaption className="d-pencil">
@@ -334,7 +333,7 @@ export default function Draft() {
             <div>
               <p>&copy; 2026 Thraya Homeopathy. Information on this site is general and does not replace a consultation.</p>
               <p style={{ marginTop: "var(--space-2xs)" }}>
-                Photographs: <a href={stillLife.credit}>formulatehealth</a> (CC BY 2.0, Wikimedia Commons); portrait placeholder from Unsplash.
+                Photographs: <a href={stillLife.credit}>formulatehealth</a> (CC BY 2.0, Wikimedia Commons).
               </p>
             </div>
             <p>Designed and developed by Kewal</p>

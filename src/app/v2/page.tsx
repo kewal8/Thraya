@@ -394,17 +394,9 @@ function Doctor() {
     <SectionCard id="doctor" tab="Know your doctor" tone="k-card--pale" at={1}>
       <div className="grid gap-10 md:grid-cols-12 md:gap-12">
         <div className="md:col-span-5 lg:col-span-4">
-          {/* Placeholder photo. Replace with Dr. Ardhra's portrait (suggested 900x1100). */}
-          <div className="k-mounted mx-auto max-w-[19rem] md:mx-0">
-            <div className="k-print relative aspect-[4/5]">
-              <Image
-                src={photos.doctor}
-                alt="Dr. Ardhra C"
-                fill
-                sizes="(min-width: 768px) 30vw, 80vw"
-                className="object-cover object-top"
-              />
-            </div>
+          {/* Empty until Dr. Ardhra's portrait arrives (suggested 900x1100): add an <Image> inside .k-print. */}
+          <div aria-hidden className="k-mounted mx-auto max-w-[19rem] md:mx-0">
+            <div className="k-print relative aspect-[4/5]" />
           </div>
         </div>
 
@@ -725,8 +717,7 @@ function Footer() {
           <div>
             <p>&copy; 2026 Thraya Homeopathy</p>
             <p className="mt-1">
-              Information on this site is general and does not replace a consultation. Placeholder
-              photos from Unsplash.
+              Information on this site is general and does not replace a consultation.
             </p>
           </div>
           <p className="shrink-0 sm:pr-20 sm:text-right">

@@ -241,15 +241,8 @@ export function DoctorV1() {
   return (
     <section id="doctor" className="container-page py-24 sm:py-32">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-tint lg:col-span-5">
-          <Image
-            src={photos.doctor}
-            alt="Placeholder photo, to be replaced with Dr. Ardhra C's portrait"
-            fill
-            sizes="(min-width: 1024px) 38vw, 92vw"
-            className="object-cover object-top"
-          />
-        </div>
+        {/* Empty until Dr. Ardhra's portrait arrives: add an <Image> here. */}
+        <div aria-hidden className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-tint lg:col-span-5" />
 
         <div className="lg:col-span-7">
           <h2 className="title text-[2.8rem] text-forest-deep sm:text-[4rem]">Dr. Ardhra C</h2>
