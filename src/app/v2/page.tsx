@@ -120,7 +120,7 @@ function Header() {
       <div className="k-wrap k-header__row relative">
         <a href="#top" aria-label="Thraya Homeopathy, home" className="shrink-0">
           <Image
-            src="/brand/thraya-logo.png"
+            src="/brand/thraya-logo.webp"
             alt="Dr. Ardhra's Thraya Homeopathy"
             width={414}
             height={189}
@@ -646,7 +646,7 @@ function Footer() {
         <div className="md:col-span-5">
           <div className="inline-block rounded-[6px] px-5 py-4" style={{ background: "var(--stock-green)" }}>
             <Image
-              src="/brand/thraya-logo.png"
+              src="/brand/thraya-logo.webp"
               alt="Dr. Ardhra's Thraya Homeopathy. Nurturing Body, Mind and Spirit."
               width={414}
               height={189}

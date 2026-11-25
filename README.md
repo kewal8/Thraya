@@ -8,7 +8,6 @@ It is a single-page site with no database or login. Visitors book a consultation
 
 - [Next.js 16](https://nextjs.org) (App Router) with React 19 and TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com)
-- [Motion](https://motion.dev) for the mobile menu animation
 - [Phosphor Icons](https://phosphoricons.com)
 - Fonts: Ascendant Serif (headings, CSS `@font-face` from `public/fonts/ascendant/`) and Hanken Grotesk (body, via `next/font/google`)
 

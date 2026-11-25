@@ -37,7 +37,7 @@ export default function Draft() {
       <header className="d-nav">
         <div className="d-nav__pill">
           <a href="#top" className="d-nav__logo" aria-label="Thraya Homeopathy, home">
-            <Image src="/brand/thraya-logo.png" alt="Dr. Ardhra's Thraya Homeopathy" width={414} height={189} preload />
+            <Image src="/brand/thraya-logo.webp" alt="Dr. Ardhra's Thraya Homeopathy" width={414} height={189} preload />
           </a>
           <nav aria-label="Primary">
             <ul className="d-nav__links">
@@ -292,7 +292,7 @@ export default function Draft() {
       <footer className="d-foot">
         <div className="d-container">
           <div className="d-foot__mark">
-            <Image src="/brand/thraya-logo.png" alt="Dr. Ardhra's Thraya Homeopathy. Nurturing Body, Mind and Spirit." width={414} height={189} />
+            <Image src="/brand/thraya-logo.webp" alt="Dr. Ardhra's Thraya Homeopathy. Nurturing Body, Mind and Spirit." width={414} height={189} />
           </div>
           <div className="d-grid d-foot__cols">
             <div className="d-foot__col">

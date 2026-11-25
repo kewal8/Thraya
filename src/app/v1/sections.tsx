@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { MapEmbed } from "@/components/map-embed";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -376,13 +377,7 @@ export function LocationV1() {
         </div>
 
         <div className="relative min-h-80 overflow-hidden rounded-[1.75rem] border border-line lg:col-span-7">
-          <iframe
-            src={embed}
-            title={`Map showing ${site.clinicName}`}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="absolute inset-0 size-full border-0"
-          />
+          <MapEmbed src={embed} title={`Map showing ${site.clinicName}`} place={site.clinicName} showLabel="Show map" />
         </div>
       </div>
     </section>

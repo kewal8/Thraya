@@ -36,7 +36,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 
 ## 3. Brand
 
-- **Logo:** `public/brand/thraya-logo.png` (414 x 189, transparent, low resolution: ask for SVG or 1600px+). Mark: a green figure holding a clay heart and a gold brain (body, mind, spirit); wordmark "Dr. Ardhra's / THRAYA / HOMEOPATHY" with a script tagline.
+- **Logo:** `public/brand/thraya-logo.webp` used on the site (lossless, 15 KB); `thraya-logo.png` kept as the source (414 x 189, transparent, low resolution: ask for SVG or 1600px+). Mark: a green figure holding a clay heart and a gold brain (body, mind, spirit); wordmark "Dr. Ardhra's / THRAYA / HOMEOPATHY" with a script tagline.
 - **Logo colours (sampled):** wordmark green `#2C623E`, figure green `#146836`, heart clay `#B2604B`, brain gold `#C79744`.
 - **Site tokens** (`src/app/globals.css`): `forest #1f5a33`, `forest-deep #133822`, `clay #b4553d`, `gold #c9962c`, plus soft tints (`clay-soft`, `gold-soft`, `leaf-soft`, `tint`, `paper`, `surface`).
 - **Spelling:** always "Homeopathy" / "Homeopathic", never "Homoeo-", including the degree and college names (client's rule).
@@ -76,7 +76,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 8. **Your first visit:** four step cards (Book, Talk, Begin treatment, Review) with numbered icon circles on a gold wash.
 9. **FAQ:** two-tone heading, card-style accordion, and a dark "Still have a question?" card with an "Ask on WhatsApp" button.
 10. **Booking:** two-panel card; dark green left panel (reassurances, "Call or WhatsApp" number), and a form (name, phone, concern, message) that opens WhatsApp with the request filled in.
-11. **Location:** "Visit the clinic." with the address, "Get directions" and an embedded Google map.
+11. **Location:** "Visit the clinic." with the address, "Get directions" and a Google map that loads only when the visitor taps "Show map".
 12. **Footer:** dark green; logo, links, contact ("Call or WhatsApp"), copyright, disclaimer, photo note, "Designed and developed by Kewal" (right).
 13. A floating WhatsApp button (bottom right) opens a chat directly.
 
@@ -92,7 +92,8 @@ src/app/icon.png, apple-icon.png  Favicon and iOS icon: the logo mark (figure, h
 src/app/page.tsx          Homepage: <HomePage hero={<Hero />} />
 src/app/globals.css       Hallmark stamp, tokens, hero wash/rings/floaters, section labels, buttons, reveal, reduced motion
 src/components/home-page.tsx  Nav + sections + footer + floating WhatsApp button
-src/components/nav.tsx    Floating pill nav (client component, Motion for the mobile menu)
+src/components/nav.tsx    Floating pill nav (client component; mobile menu animates with CSS grid rows, no Motion)
+src/components/map-embed.tsx  Tap-to-load Google Map (placeholder until "Show map"; saves ~1 MB)
 src/components/hero.tsx   Hero + trust band (server component, CSS-only entrance)
 src/components/sections.tsx   Approach, Conditions, Medicines (Why Thraya), Doctor, Visit, Location, Footer
 src/components/faq.tsx    Accordion (client)
@@ -125,6 +126,7 @@ README.md                 Developer README
 - **Reveal animations** hide content only under the `.js` class set by a `beforeInteractive` script, so the page works with scripts off. A dev-only React warning about the script tag is expected.
 - In the `/draft` CSS, base element rules use `:where(.draft)` so component classes win. (A specificity bug once made the green button's text dark.)
 - **Bilingual homepage:** every homepage component takes `locale` (default "en") and reads words from `getContent(locale)`. New copy must be added to both `en` and `kn` in `src/lib/content.ts`. The `.locale-kn` rules at the end of `globals.css` set Kannada fonts, line heights and smaller display sizes. `<html lang>` stays `en`; the page wrapper carries `lang="kn"`.
+- **Performance:** the Motion library was removed (the nav menu uses CSS), images are WebP and `next.config.ts` serves AVIF/WebP, below-the-fold images lazy-load (next/image default; only the nav logo is preloaded), and the map loads on tap. Measured on the local production build at phone size: about 300 KB before scrolling (was 357 KB), 183 KB of it JavaScript (was 223 KB).
 - When screenshotting in a browser, set `document.documentElement.style.scrollBehavior = 'auto'`, or `scrollTo` lands mid-animation.
 
 ## 8. Open items before launch
@@ -165,3 +167,4 @@ README.md                 Developer README
 - **2026-11-25** Why Thraya photo replaced again with the user-supplied globules-and-spoon photo (`public/images/globules-spoon.webp`, `photos.remedies`) on `/`, `/v1` and `/v2`; the remedy-bottles photo was deleted.
 - **2026-11-25** Favicon added: the logo mark cropped from `public/brand/thraya-logo.png` as `src/app/icon.png` (transparent) and `src/app/apple-icon.png` (white); the default Next.js `favicon.ico` was removed. Regenerate from an SVG or high-res logo when one arrives (the source mark is only 83x108px).
 - **2026-11-25** Kannada added: `/kn` renders the homepage in Kannada (draft translation in `src/lib/content.ts`, Noto Sans/Serif Kannada for Kannada glyphs). A language switch pill sits in the nav next to the call button, visible on every screen size. WhatsApp messages stay in English. Hero headline size now scales with the screen below 400px so "Personalised for You" stays on one line at 360px.
+- **2026-11-25** Speed pass: removed Motion (nav menu now CSS), Google Map loads on tap ("Show map") on `/` and `/v1`, logo converted to WebP (28 KB to 15 KB), globules photo recompressed (92 KB to 47 KB), AVIF/WebP enabled in `next.config.ts`, logo `sizes` set. First view on phones went from about 357 KB to 303 KB, plus about 1 MB saved when scrolling past the map.

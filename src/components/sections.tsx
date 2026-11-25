@@ -10,6 +10,7 @@ import {
   MapPin,
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
+import { MapEmbed } from "@/components/map-embed";
 import { Reveal } from "@/components/reveal";
 import { conditionGroups, nav, photos, promises, site, steps, toneStyles, triad, waLink, phoneIsWhatsapp } from "@/lib/site";
 import { englishConditionName, getContent, type Locale } from "@/lib/content";
@@ -315,13 +316,7 @@ export function Location({ locale = "en" }: L) {
         </Reveal>
 
         <div className="relative min-h-80 lg:col-span-7">
-          <iframe
-            src={embed}
-            title={t.mapTitle(site.clinicName)}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="absolute inset-0 size-full border-0"
-          />
+          <MapEmbed src={embed} title={t.mapTitle(site.clinicName)} place={site.clinicName} showLabel={t.showMap} />
         </div>
       </div>
     </section>
@@ -337,10 +332,11 @@ export function Footer({ locale = "en" }: L) {
         <div className="md:col-span-5">
           <div className="inline-block rounded-2xl bg-surface px-5 py-4">
             <Image
-              src="/brand/thraya-logo.png"
+              src="/brand/thraya-logo.webp"
               alt={t.logoAlt}
               width={414}
               height={189}
+              sizes="150px"
               className="h-16 w-auto"
             />
           </div>

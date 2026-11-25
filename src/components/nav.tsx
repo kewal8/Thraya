@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { List, Phone, Translate, WhatsappLogo, X } from "@phosphor-icons/react";
 import { nav, site, waLink } from "@/lib/site";
 import { getContent, localePath, type Locale } from "@/lib/content";
@@ -13,12 +12,17 @@ export function Nav({ locale = "en", languageSwitch = true }: { locale?: Locale;
   const sw = c.switcher;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => {
-    const next = v > 12;
-    setScrolled((prev) => (prev === next ? prev : next));
-  });
+  // Deepen the bar's shadow once the page scrolls. Plain listener: no animation library needed.
+  useEffect(() => {
+    const onScroll = () => {
+      const next = window.scrollY > 12;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -37,11 +41,12 @@ export function Nav({ locale = "en", languageSwitch = true }: { locale?: Locale;
       <div className="flex h-16 items-center justify-between gap-4 pl-4 pr-2 sm:h-[4.5rem] sm:pl-6 sm:pr-2.5">
         <a href="#top" aria-label={ui.homeAria} className="shrink-0">
           <Image
-            src="/brand/thraya-logo.png"
+            src="/brand/thraya-logo.webp"
             alt="Dr. Ardhra's Thraya Homeopathy"
             width={414}
             height={189}
             preload
+            sizes="130px"
             className="h-12 w-auto sm:h-[3.4rem]"
           />
         </a>
@@ -98,16 +103,17 @@ export function Nav({ locale = "en", languageSwitch = true }: { locale?: Locale;
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.nav
+      {/* Mobile menu: height animates with a CSS grid-rows transition; inert while closed. */}
+      <div
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out-soft motion-reduce:transition-none lg:hidden ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+        inert={!open}
+      >
+          <nav
             id="mobile-menu"
             aria-label={ui.mobileNav}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-line px-2 lg:hidden"
+            className={`min-h-0 overflow-hidden px-2 ${open ? "border-t border-line" : ""}`}
           >
             <ul className="px-3 py-2">
               {nav.map((item, i) => (
@@ -136,9 +142,8 @@ export function Nav({ locale = "en", languageSwitch = true }: { locale?: Locale;
                 </a>
               </li>
             </ul>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+          </nav>
+      </div>
       </div>
     </header>
   );
