@@ -87,6 +87,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 
 ```
 src/app/layout.tsx        Hanken via next/font/google, metadata, "js" class script (Ascendant is a CSS @font-face in globals.css)
+src/app/icon.png, apple-icon.png  Favicon and iOS icon: the logo mark (figure, heart, brain) cropped from thraya-logo.png
 src/app/page.tsx          Homepage: <HomePage hero={<Hero />} />
 src/app/globals.css       Hallmark stamp, tokens, hero wash/rings/floaters, section labels, buttons, reveal, reduced motion
 src/components/home-page.tsx  Nav + sections + footer + floating WhatsApp button
@@ -156,3 +157,4 @@ README.md                 Developer README
 - **2026-11-25** Impeccable pass: PRODUCT.md written. Two full redesigns built with the same copy, homepage untouched: Copy 1 at `/v1` (refined warm direction, Gambetta) and Copy 2 at `/v2` ("The Clinic Card", Erode, chosen by the user from an Impeccable direction round). Both went through two independent finish-review rounds; fixes applied. Open: self-hosting the fonts, Copy 2 tab labels, DESIGN.md, picking a direction.
 - **2026-11-25** Doctor stock photo removed ahead of going live: the portrait frame is now empty on `/`, `/v1`, `/v2` and `/draft`; Unsplash placeholder notes removed from the footers.
 - **2026-11-25** Why Thraya photo replaced again with the user-supplied globules-and-spoon photo (`public/images/globules-spoon.webp`, `photos.remedies`) on `/`, `/v1` and `/v2`; the remedy-bottles photo was deleted.
+- **2026-11-25** Favicon added: the logo mark cropped from `public/brand/thraya-logo.png` as `src/app/icon.png` (transparent) and `src/app/apple-icon.png` (white); the default Next.js `favicon.ico` was removed. Regenerate from an SVG or high-res logo when one arrives (the source mark is only 83x108px).
