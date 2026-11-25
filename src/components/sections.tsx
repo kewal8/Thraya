@@ -138,10 +138,10 @@ export function Medicines() {
           <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-forest lg:aspect-[4/5]">
             <Image
               src={photos.remedies}
-              alt="Amber remedy bottles with white flowers and green leaves on a wooden table"
+              alt="Homeopathic globules spilling from an amber bottle onto a green leaf, with a wooden spoon"
               fill
               sizes="(min-width: 1024px) 38vw, 92vw"
-              className="object-cover object-bottom"
+              className="object-cover object-[40%_55%]"
             />
           </div>
         </Reveal>

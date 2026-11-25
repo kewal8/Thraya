@@ -71,7 +71,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 4. **Our approach:** label, two-tone heading "Care that sees / the whole person.", the client's approach copy, then three white cards (Body, Mind, Spirit) with dark green icon tiles.
 5. **What we treat:** centred two-tone heading; eight condition cards (two columns on phones) with icon tiles, group label and an "Ask about this" WhatsApp link; a dark green "Not sure if your concern is covered?" band.
 6. **Know your doctor:** empty portrait frame (tinted, until the real photo arrives), name, bio, two figures ("10+ years", "Women & children"), and credential cards with icon tiles.
-7. **Why Thraya:** dark green section, two-tone heading "Gentle medicine, / chosen for you.", a photo of amber remedy bottles with white flowers (`public/images/remedy-bottles.webp`, supplied by the user; portrait on desktop, 4:3 on phones), and a 2x2 grid of cards with gold icon tiles (medicines from Germany & France, personalised plans, time to listen, care for every age).
+7. **Why Thraya:** dark green section, two-tone heading "Gentle medicine, / chosen for you.", a photo of homeopathic globules spilling from an amber bottle onto a leaf with a wooden spoon (`public/images/globules-spoon.webp`, supplied by the user; 4:5 crop on desktop, 4:3 on phones), and a 2x2 grid of cards with gold icon tiles (medicines from Germany & France, personalised plans, time to listen, care for every age).
 8. **Your first visit:** four step cards (Book, Talk, Begin treatment, Review) with numbered icon circles on a gold wash.
 9. **FAQ:** two-tone heading, card-style accordion, and a dark "Still have a question?" card with an "Ask on WhatsApp" button.
 10. **Booking:** two-panel card; dark green left panel (reassurances, "Call or WhatsApp" number), and a form (name, phone, concern, message) that opens WhatsApp with the request filled in.
@@ -80,7 +80,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 13. A floating WhatsApp button (bottom right) opens a chat directly.
 
 ### Placeholders still in use
-- The doctor portrait frame is empty on every route (stock photo removed before going live). The footer's "Placeholder photos from Unsplash" note was removed. The Why Thraya remedy-bottles photo was supplied by the user (source and licence not confirmed). One Wikimedia still life remains on `/draft`.
+- The doctor portrait frame is empty on every route (stock photo removed before going live). The footer's "Placeholder photos from Unsplash" note was removed. The Why Thraya globules photo was supplied by the user (source and licence not confirmed). One Wikimedia still life remains on `/draft`.
 - FAQ answers, condition notes, the steps and the body/mind/spirit lines are drafts awaiting Dr. Ardhra's review.
 
 ## 6. Code map
@@ -103,7 +103,7 @@ src/app/v2/               Copy 2, The Clinic Card (scoped CSS; Erode from Fontsh
 PRODUCT.md                Product truth for Impeccable (audience, purpose, constraints, evidence)
 .impeccable/              Impeccable surface briefs (v2 direction contract) and review captures
 src/app/draft/            Self-contained redesign draft (own CSS scoped to [data-theme="thraya-draft"])
-public/images/            Local photos (remedy-bottles.webp)
+public/images/            Local photos (globules-spoon.webp)
 public/fonts/ascendant/   Ascendant Serif PERSONAL-USE files (git-ignored, local only) + README
 THRAYA-BRIEF.md           Content and brand brief with no design choices (for Claude Design or a redesign)
 README.md                 Developer README
@@ -155,3 +155,4 @@ README.md                 Developer README
 - **2026-11-25** Why Thraya photo replaced: the Unsplash stethoscope-and-globules image became the user-supplied remedy-bottles photo (`public/images/remedy-bottles.webp`, `photos.remedies` in site.ts); its frame is 4:5 on desktop and anchored to the bottom so the bottle and dropper are never cropped.
 - **2026-11-25** Impeccable pass: PRODUCT.md written. Two full redesigns built with the same copy, homepage untouched: Copy 1 at `/v1` (refined warm direction, Gambetta) and Copy 2 at `/v2` ("The Clinic Card", Erode, chosen by the user from an Impeccable direction round). Both went through two independent finish-review rounds; fixes applied. Open: self-hosting the fonts, Copy 2 tab labels, DESIGN.md, picking a direction.
 - **2026-11-25** Doctor stock photo removed ahead of going live: the portrait frame is now empty on `/`, `/v1`, `/v2` and `/draft`; Unsplash placeholder notes removed from the footers.
+- **2026-11-25** Why Thraya photo replaced again with the user-supplied globules-and-spoon photo (`public/images/globules-spoon.webp`, `photos.remedies`) on `/`, `/v1` and `/v2`; the remedy-bottles photo was deleted.
