@@ -12,35 +12,34 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/reveal";
 import { conditionGroups, nav, photos, promises, site, steps, toneStyles, triad, waLink, phoneIsWhatsapp } from "@/lib/site";
+import { englishConditionName, getContent, type Locale } from "@/lib/content";
 
-export function Approach() {
+type L = { locale?: Locale };
+
+export function Approach({ locale = "en" }: L) {
+  const t = getContent(locale).approach;
   return (
     <section id="approach" className="container-page py-20 sm:py-28">
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
-          <p className="section-label">Our approach</p>
+          <p className="section-label">{t.label}</p>
           <h2 className="display mt-5 text-[2.5rem] text-forest-deep sm:text-[3.4rem]">
-            Care that sees
-            <span className="block text-forest">the whole person.</span>
+            {t.h1}
+            <span className="block text-forest">{t.h2}</span>
           </h2>
         </Reveal>
 
         <Reveal delay={0.06} className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-7 lg:pt-12">
-          <p className="text-ink/85">
-            At Thraya Homeopathy, every patient is treated as an individual, with a focus on
-            understanding the person as a whole rather than just the presenting complaint.
-          </p>
-          <p>
-            Rooted in the principles of classical homeopathy, our approach involves detailed
-            case-taking, attentive listening and individualised prescriptions, guided by each
-            patient&rsquo;s unique symptoms and health history.
-          </p>
-          <p>Every consultation is approached with patience, compassion and care.</p>
+          <p className="text-ink/85">{t.p1}</p>
+          <p>{t.p2}</p>
+          <p>{t.p3}</p>
         </Reveal>
       </div>
 
       <div className="mt-16 grid gap-5 md:grid-cols-3">
-        {triad.map(({ word, icon: Icon, body }, i) => (
+        {triad.map(({ icon: Icon }, i) => {
+          const { word, body } = t.triad[i];
+          return (
           <Reveal
             key={word}
             delay={i * 0.08}
@@ -52,34 +51,42 @@ export function Approach() {
             <h3 className="display mt-6 text-[1.9rem] text-forest-deep">{word}</h3>
             <p className="mt-3 leading-relaxed text-muted">{body}</p>
           </Reveal>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
 }
 
-const conditionCards = conditionGroups.flatMap((g) =>
-  g.items.map((item) => ({ ...item, group: g.title, tone: g.tone })),
-);
-
-export function Conditions() {
+export function Conditions({ locale = "en" }: L) {
+  const t = getContent(locale).conditions;
+  const ui = getContent(locale).ui;
+  const conditionCards = conditionGroups.flatMap((g, gi) =>
+    g.items.map((item, ii) => ({
+      icon: item.icon,
+      tone: g.tone,
+      group: t.groups[gi].title,
+      name: t.groups[gi].items[ii].name,
+      note: t.groups[gi].items[ii].note,
+      enName: englishConditionName(gi, ii),
+    })),
+  );
   return (
     <section id="care" className="bg-tint py-20 sm:py-28">
       <div className="container-page">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-label">What we treat</p>
+          <p className="section-label">{t.label}</p>
           <h2 className="display mt-5 text-[2.5rem] text-forest-deep sm:text-[3.4rem]">
-            Care for every stage
-            <span className="block text-forest">of family life.</span>
+            {t.h1}
+            <span className="block text-forest">{t.h2}</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            Consultations for women, men and children, for a wide range of acute and chronic
-            health concerns.
+            {t.intro}
           </p>
         </Reveal>
 
         <ul className="mt-12 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-4 lg:grid-cols-4">
-          {conditionCards.map(({ name, note, icon: Icon, tone, group }, i) => {
+          {conditionCards.map(({ name, note, icon: Icon, tone, group, enName }, i) => {
             const t = toneStyles[tone];
             return (
               <Reveal
@@ -96,12 +103,12 @@ export function Conditions() {
                   <h3 className="display text-[1.1rem] leading-tight text-forest-deep sm:mt-1 sm:text-[1.35rem]">{name}</h3>
                   <p className="mt-2 hidden text-[0.95rem] leading-relaxed text-muted sm:block">{note}</p>
                   <a
-                    href={waLink(`Hello Thraya Homeopathy, I would like to ask about ${name}.`)}
+                    href={waLink(`Hello Thraya Homeopathy, I would like to ask about ${enName}.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.85rem] font-semibold text-forest after:absolute after:inset-0 after:rounded-[inherit] hover:text-forest-deep sm:pt-5 sm:text-[0.92rem]"
                   >
-                    Ask about this
+                    {ui.askAbout}
                     <ArrowRight size={15} weight="bold" className="transition-transform duration-300 group-hover:translate-x-0.5" />
                   </a>
                 </div>
@@ -113,10 +120,10 @@ export function Conditions() {
         <Reveal className="mt-10 flex flex-col items-start gap-4 rounded-[1.5rem] bg-forest p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="flex items-center gap-4">
             <ChatCircleDots size={30} weight="duotone" className="shrink-0 text-gold" />
-            <p className="text-lg">Not sure if your concern is covered? Ask us before booking.</p>
+            <p className="text-lg">{t.notSure}</p>
           </div>
           <a href="#book" className="btn bg-surface text-forest-deep hover:bg-gold-soft">
-            Book a consultation
+            {ui.book}
             <ArrowRight size={18} weight="bold" />
           </a>
         </Reveal>
@@ -125,20 +132,21 @@ export function Conditions() {
   );
 }
 
-export function Medicines() {
+export function Medicines({ locale = "en" }: L) {
+  const t = getContent(locale).medicines;
   return (
     <section className="relative overflow-clip bg-forest-deep text-white">
       <div className="container-page grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:items-center lg:gap-16">
         <Reveal className="lg:col-span-5">
-          <p className="section-label on-dark">Why Thraya</p>
+          <p className="section-label on-dark">{t.label}</p>
           <h2 className="display mt-5 text-[2.5rem] text-white sm:text-[3.2rem]">
-            Gentle medicine,
-            <span className="block text-gold-soft">chosen for you.</span>
+            {t.h1}
+            <span className="block text-gold-soft">{t.h2}</span>
           </h2>
           <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-forest lg:aspect-[4/5]">
             <Image
               src={photos.remedies}
-              alt="Homeopathic globules spilling from an amber bottle onto a green leaf, with a wooden spoon"
+              alt={t.alt}
               fill
               sizes="(min-width: 1024px) 38vw, 92vw"
               className="object-cover object-[40%_55%]"
@@ -147,7 +155,9 @@ export function Medicines() {
         </Reveal>
 
         <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          {promises.map(({ title, body, icon: Icon }, i) => (
+          {promises.map(({ icon: Icon }, i) => {
+            const { title, body } = t.promises[i];
+            return (
             <Reveal
               as="li"
               key={title}
@@ -162,37 +172,18 @@ export function Medicines() {
               </h3>
               <p className="mt-2 leading-relaxed text-white/70">{body}</p>
             </Reveal>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>
   );
 }
 
-const credentials = [
-  {
-    icon: GraduationCap,
-    term: "Degree",
-    detail: "Bachelor of Homeopathic Medicine and Surgery (BHMS)",
-  },
-  {
-    icon: Certificate,
-    term: "Postgraduate",
-    detail: "MD (Hom.) in Organon of Medicine and Homeopathic Philosophy",
-  },
-  {
-    icon: Buildings,
-    term: "Alma mater",
-    detail: "Father Muller Homeopathic Medical College and Hospital, Deralakatte, Mangalore",
-  },
-];
+const credentialIcons = [GraduationCap, Certificate, Buildings];
 
-const doctorStats = [
-  { value: "10+ years", label: "of clinical experience" },
-  { value: "Women & children", label: "special focus of practice" },
-];
-
-export function Doctor() {
+export function Doctor({ locale = "en" }: L) {
+  const t = getContent(locale).doctor;
   return (
     <section id="doctor" className="container-page py-20 sm:py-28">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -202,18 +193,15 @@ export function Doctor() {
         </Reveal>
 
         <Reveal delay={0.06} className="lg:col-span-7">
-          <p className="section-label">Know your doctor</p>
-          <h2 className="display mt-5 text-5xl text-forest-deep sm:text-[3.6rem]">Dr. Ardhra C</h2>
-          <p className="mt-3 text-lg font-medium text-clay">BHMS, MD (Hom.)</p>
+          <p className="section-label">{t.label}</p>
+          <h2 className="display mt-5 text-5xl text-forest-deep sm:text-[3.6rem]">{t.name}</h2>
+          <p className="mt-3 text-lg font-medium text-clay">{t.degrees}</p>
           <p className="mt-6 max-w-[58ch] text-lg leading-relaxed text-ink/85">
-            With over 10 years of clinical experience, Dr. Ardhra specialises in classical
-            homeopathy, with a special focus on women&rsquo;s and children&rsquo;s health, while
-            catering to patients of all ages with a wide range of acute and chronic health
-            concerns.
+            {t.bio}
           </p>
 
           <dl className="mt-10 grid grid-cols-1 gap-5 border-y border-line py-6 sm:grid-cols-2 sm:gap-6">
-            {doctorStats.map((s) => (
+            {t.stats.map((s) => (
               <div key={s.value}>
                 <dt className="display whitespace-nowrap text-[1.75rem] leading-none text-forest lg:text-[1.9rem]">
                   {s.value}
@@ -226,7 +214,9 @@ export function Doctor() {
           </dl>
 
           <ul className="mt-8 grid gap-3">
-            {credentials.map(({ icon: Icon, term, detail }) => (
+            {t.credentials.map(({ term, detail }, ci) => {
+              const Icon = credentialIcons[ci];
+              return (
               <li key={term} className="flex items-start gap-4 rounded-2xl border border-line bg-surface p-4 shadow-card">
                 <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-forest-deep text-gold-soft">
                   <Icon size={22} weight="duotone" />
@@ -236,7 +226,8 @@ export function Doctor() {
                   {detail}
                 </p>
               </li>
-            ))}
+              );
+            })}
           </ul>
         </Reveal>
       </div>
@@ -244,15 +235,16 @@ export function Doctor() {
   );
 }
 
-export function Visit() {
+export function Visit({ locale = "en" }: L) {
+  const t = getContent(locale).visit;
   return (
     <section className="bg-gold-wash py-20 sm:py-28">
       <div className="container-page">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-label">Your first visit</p>
+          <p className="section-label">{t.label}</p>
           <h2 className="display mt-5 text-[2.5rem] text-forest-deep sm:text-[3.4rem]">
-            Four simple steps
-            <span className="block text-forest">to begin your care.</span>
+            {t.h1}
+            <span className="block text-forest">{t.h2}</span>
           </h2>
         </Reveal>
         <ol className="relative mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
@@ -260,7 +252,9 @@ export function Visit() {
             aria-hidden
             className="absolute left-[12.5%] right-[12.5%] top-[3.75rem] hidden border-t-2 border-dashed border-forest/25 lg:block"
           />
-          {steps.map(({ title, body, icon: Icon }, i) => (
+          {steps.map(({ icon: Icon }, i) => {
+            const { title, body } = t.steps[i];
+            return (
             <Reveal
               as="li"
               key={title}
@@ -276,14 +270,16 @@ export function Visit() {
               <h3 className="display mt-6 text-[1.5rem] text-forest-deep">{title}</h3>
               <p className="mx-auto mt-2 max-w-[28ch] leading-relaxed text-muted">{body}</p>
             </Reveal>
-          ))}
+            );
+          })}
         </ol>
       </div>
     </section>
   );
 }
 
-export function Location() {
+export function Location({ locale = "en" }: L) {
+  const t = getContent(locale).location;
   const { lat, lng } = site.geo;
   const embed = `https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
   return (
@@ -294,8 +290,8 @@ export function Location() {
             <MapPin size={28} weight="duotone" />
           </span>
           <h2 className="display mt-6 text-[2.5rem] text-forest-deep sm:text-[3rem]">
-            Visit
-            <span className="text-forest"> the clinic.</span>
+            {t.h1}
+            <span className="text-forest">{t.h2}</span>
           </h2>
           <address className="mt-6 not-italic">
             <p className="text-lg font-semibold text-forest-deep">{site.clinicName}</p>
@@ -313,7 +309,7 @@ export function Location() {
             )}
           </address>
           <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-8">
-            Get directions
+            {t.directions}
             <ArrowUpRight size={18} weight="bold" />
           </a>
         </Reveal>
@@ -321,7 +317,7 @@ export function Location() {
         <div className="relative min-h-80 lg:col-span-7">
           <iframe
             src={embed}
-            title={`Map showing ${site.clinicName}`}
+            title={t.mapTitle(site.clinicName)}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             className="absolute inset-0 size-full border-0"
@@ -332,7 +328,9 @@ export function Location() {
   );
 }
 
-export function Footer() {
+export function Footer({ locale = "en" }: L) {
+  const c = getContent(locale);
+  const t = c.footer;
   return (
     <footer className="bg-forest-deep text-white">
       <div className="container-page grid gap-10 py-14 md:grid-cols-12">
@@ -340,27 +338,27 @@ export function Footer() {
           <div className="inline-block rounded-2xl bg-surface px-5 py-4">
             <Image
               src="/brand/thraya-logo.png"
-              alt="Dr. Ardhra's Thraya Homeopathy. Nurturing Body, Mind and Spirit."
+              alt={t.logoAlt}
               width={414}
               height={189}
               className="h-16 w-auto"
             />
           </div>
           <p className="mt-5 max-w-sm leading-relaxed text-white/70">
-            Classical homeopathy for women, men, children and the entire family.
+            {t.blurb}
           </p>
         </div>
 
-        <nav aria-label="Footer" className="md:col-span-3">
-          <h2 className="text-sm font-semibold text-gold">Explore</h2>
+        <nav aria-label={t.footerNav} className="md:col-span-3">
+          <h2 className="text-sm font-semibold text-gold">{t.explore}</h2>
           <ul className="mt-3">
-            {nav.map((item) => (
+            {nav.map((item, i) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   className="inline-flex min-h-11 items-center text-white/75 transition-colors hover:text-white"
                 >
-                  {item.label}
+                  {c.nav[i]}
                 </a>
               </li>
             ))}
@@ -368,7 +366,7 @@ export function Footer() {
         </nav>
 
         <div className="md:col-span-4">
-          <h2 className="text-sm font-semibold text-gold">Contact</h2>
+          <h2 className="text-sm font-semibold text-gold">{t.contact}</h2>
           <ul className="mt-3 space-y-3 text-white/75">
             {site.whatsapp && (
               <li className="flex gap-3">
@@ -382,7 +380,7 @@ export function Footer() {
                       href={`tel:${site.phone.replace(/\s/g, "")}`}
                       className="mt-1 block text-[0.9rem] text-white/60 hover:text-white"
                     >
-                      Call or WhatsApp
+                      {t.callOrWhatsapp}
                     </a>
                   )}
                 </span>
@@ -422,7 +420,7 @@ export function Footer() {
           <div>
             <p>&copy; 2026 Thraya Homeopathy</p>
             <p className="mt-1 text-white/45">
-              Information on this site is general and does not replace a consultation.
+              {t.disclaimer}
             </p>
           </div>
           <p className="shrink-0 sm:pr-20 sm:text-right">

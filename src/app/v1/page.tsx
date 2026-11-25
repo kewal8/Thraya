@@ -30,7 +30,7 @@ export default function CopyOne() {
         href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500,600&display=swap"
         precedence="default"
       />
-      <Nav />
+      <Nav languageSwitch={false} />
       <main id="main">
         <HeroV1 />
         <ApproachV1 />

@@ -11,16 +11,15 @@ import {
 } from "@phosphor-icons/react";
 import { Reveal } from "@/components/reveal";
 import { concernOptions, phoneIsWhatsapp, site, waLink } from "@/lib/site";
+import { getContent, type Locale } from "@/lib/content";
 
 type Errors = { name?: string; phone?: string };
 
-const reassurances = [
-  "Opens WhatsApp with your request ready to send",
-  "Your details are shared only when you press send",
-  "Patients of all ages are welcome",
-];
+/** Keeps a phone number on one line. */
+const nbsp = (n: string) => n.replace(/ /g, "\u00a0");
 
-export function Booking() {
+export function Booking({ locale = "en" }: { locale?: Locale }) {
+  const t = getContent(locale).booking;
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
 
@@ -33,8 +32,8 @@ export function Booking() {
     const message = String(data.get("message") ?? "").trim();
 
     const next: Errors = {};
-    if (name.length < 2) next.name = "Please enter your full name.";
-    if (phone.replace(/\D/g, "").length < 10) next.phone = "Please enter a valid phone number.";
+    if (name.length < 2) next.name = t.errName;
+    if (phone.replace(/\D/g, "").length < 10) next.phone = t.errPhone;
     setErrors(next);
     if (next.name || next.phone) {
       setSent(false);
@@ -56,7 +55,7 @@ export function Booking() {
   const details = [
     site.whatsapp && {
       icon: WhatsappLogo,
-      label: phoneIsWhatsapp ? `Call or WhatsApp ${site.whatsappDisplay}` : `WhatsApp ${site.whatsappDisplay}`,
+      label: phoneIsWhatsapp ? t.callOrWhatsapp(nbsp(site.whatsappDisplay)) : t.whatsappOnly(nbsp(site.whatsappDisplay)),
       href: waLink(),
     },
     site.phone && !phoneIsWhatsapp && { icon: Phone, label: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
@@ -74,18 +73,17 @@ export function Booking() {
             weight="fill"
             className="pointer-events-none absolute -bottom-12 -right-12 text-white/[0.05]"
           />
-          <p className="section-label on-dark relative">Begin your care</p>
+          <p className="section-label on-dark relative">{t.label}</p>
           <h2 className="display relative mt-5 text-[2.5rem] text-white sm:text-[3rem]">
-            Book your
-            <span className="block text-gold-soft">consultation.</span>
+            {t.h1}
+            <span className="block text-gold-soft">{t.h2}</span>
           </h2>
           <p className="relative mt-5 max-w-md text-lg leading-relaxed text-white/80">
-            Share a few details and your request opens in WhatsApp, ready to send. We will
-            confirm a consultation time with you.
+            {t.intro}
           </p>
 
           <ul className="relative mt-8 space-y-3">
-            {reassurances.map((r) => (
+            {t.reassurances.map((r) => (
               <li key={r} className="flex items-start gap-3 text-white/90">
                 <CheckCircle size={22} weight="fill" className="mt-0.5 shrink-0 text-gold" />
                 {r}
@@ -121,7 +119,7 @@ export function Booking() {
           >
             <div className="grid gap-2">
               <label htmlFor="name" className="text-sm font-semibold text-forest-deep">
-                Full name
+                {t.name}
               </label>
               <input
                 id="name"
@@ -141,7 +139,7 @@ export function Booking() {
 
             <div className="grid gap-2">
               <label htmlFor="phone" className="text-sm font-semibold text-forest-deep">
-                Phone number
+                {t.phone}
               </label>
               <input
                 id="phone"
@@ -163,35 +161,37 @@ export function Booking() {
 
             <div className="grid gap-2 sm:col-span-2">
               <label htmlFor="concern" className="text-sm font-semibold text-forest-deep">
-                What would you like help with?
+                {t.concern}
               </label>
               <select id="concern" name="concern" defaultValue="" className="field appearance-none">
-                <option value="">Choose a concern (optional)</option>
-                {concernOptions.map((c) => (
-                  <option key={c}>{c}</option>
+                <option value="">{t.concernPlaceholder}</option>
+                {concernOptions.map((c, i) => (
+                  <option key={c} value={c}>
+                    {t.concernOptions[i]}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="grid gap-2 sm:col-span-2">
               <label htmlFor="message" className="text-sm font-semibold text-forest-deep">
-                Anything you would like us to know
+                {t.message}
               </label>
               <textarea id="message" name="message" rows={4} className="field resize-y" />
               <p className="text-sm text-muted">
-                Optional. Your details are only shared when you press send in WhatsApp.
+                {t.messageHint}
               </p>
             </div>
 
             <p className="flex items-start gap-2 rounded-xl bg-clay-soft px-4 py-3 text-sm leading-relaxed text-ink/80 sm:col-span-2">
               <WarningCircle size={18} className="mt-0.5 shrink-0 text-clay" />
-              For a medical emergency, please go to your nearest hospital.
+              {t.emergency}
             </p>
 
             <div className="sm:col-span-2">
               <button type="submit" className="btn btn-primary w-full sm:w-auto">
                 <WhatsappLogo size={20} weight="fill" />
-                Book a consultation
+                {t.submit}
               </button>
               <p
                 role="status"
@@ -203,7 +203,7 @@ export function Booking() {
                 {sent && (
                   <>
                     <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0" />
-                    WhatsApp has opened with your request. Press send there to reach us.
+                    {t.sent}
                   </>
                 )}
               </p>

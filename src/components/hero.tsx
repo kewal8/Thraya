@@ -11,6 +11,7 @@ import {
   Clock,
 } from "@phosphor-icons/react/dist/ssr";
 import { conditionGroups, focusAreas, toneStyles } from "@/lib/site";
+import { getContent, type Locale } from "@/lib/content";
 
 /** CSS-only entrance (see .rise in globals.css): visible without scripts, still under reduced motion. */
 const rise = (delay: number) => ({ "--rise-delay": `${delay}s` }) as React.CSSProperties;
@@ -31,14 +32,11 @@ const specialised = [
   { label: "Skin & hair", icon: conditionGroups[2].items[1].icon, tone: "forest" as const },
 ];
 
-const trust = [
-  { icon: Clock, value: "10+ years", label: "of clinical experience" },
-  { icon: Certificate, value: "MD (Hom.)", label: "postgraduate qualified" },
-  { icon: HandHeart, value: "All ages", label: "women, men and children" },
-  { icon: GlobeHemisphereEast, value: "Germany & France", label: "medicines sourced from" },
-];
+const trustIcons = [Clock, Certificate, HandHeart, GlobeHemisphereEast];
 
-export function Hero() {
+export function Hero({ locale = "en" }: { locale?: Locale }) {
+  const t = getContent(locale).hero;
+  const ui = getContent(locale).ui;
   return (
     <>
       <section id="top" className="hero-wash relative overflow-clip pt-[4.5rem] sm:pt-20">
@@ -61,11 +59,11 @@ export function Hero() {
 
         <div className="container-page relative flex flex-col items-center pb-16 pt-20 text-center sm:pb-20 sm:pt-28 lg:pb-24 lg:pt-32">
           <h1 className="rise display text-forest-deep" style={rise(0)}>
-            <span className="block text-[2.1rem] leading-[1.1] sm:text-[4rem] lg:text-[4.5rem]">
-              Gentle Healing,
+            <span className="block text-[clamp(1.75rem,8.4vw,2.1rem)] leading-[1.1] sm:text-[4rem] lg:text-[4.5rem]">
+              {t.line1}
             </span>
-            <span className="block text-[2.1rem] leading-[1.1] text-forest sm:text-[4rem] lg:text-[4.5rem]">
-              Personalised for You
+            <span className="block text-[clamp(1.75rem,8.4vw,2.1rem)] leading-[1.1] text-forest sm:text-[4rem] lg:text-[4.5rem]">
+              {t.line2}
             </span>
           </h1>
 
@@ -73,38 +71,40 @@ export function Hero() {
             className="rise display mt-5 max-w-2xl text-[1.25rem] leading-snug text-ink/80 sm:mt-6 sm:text-[1.75rem]"
             style={rise(0.06)}
           >
-            To Restore Balance, Relieve Symptoms and Support Lasting Health
+            {t.sub}
           </p>
 
           <div className="rise mt-6 flex w-full max-w-2xl items-center gap-2 sm:mt-7 sm:gap-4" style={rise(0.1)}>
             <span aria-hidden className="h-px flex-1 bg-forest/25" />
-            <p className="display shrink-0 whitespace-nowrap rounded-full bg-leaf-soft px-3 py-1.5 text-[0.82rem] text-forest-deep sm:px-6 sm:py-2 sm:text-[1.2rem]">
-              for Women, Men, Children &amp; the Entire Family
+            <p className="hero-pill display shrink-0 whitespace-nowrap rounded-full bg-leaf-soft px-3 py-1.5 text-[0.82rem] text-forest-deep sm:px-6 sm:py-2 sm:text-[1.2rem]">
+              {t.pill}
             </p>
             <span aria-hidden className="h-px flex-1 bg-forest/25" />
           </div>
 
           <p className="rise mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl" style={rise(0.14)}>
-            Individualised care for acute and chronic concerns, led by Dr.&nbsp;Ardhra&nbsp;C.
+            {t.desc}
           </p>
 
           <div className="rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={rise(0.18)}>
             <a href="#book" className="btn btn-primary shadow-card">
-              Book a consultation
+              {ui.book}
               <ArrowRight size={18} weight="bold" />
             </a>
             <a
               href="#care"
               className="btn border border-forest/20 bg-surface/80 text-forest-deep hover:border-forest/40 hover:bg-surface"
             >
-              Explore our services
+              {t.explore}
             </a>
           </div>
 
           <div className="rise mt-12 w-full max-w-4xl border-t border-forest/10 pt-7" style={rise(0.26)}>
-            <p className="text-[0.95rem] font-medium text-muted">Specialised care for</p>
+            <p className="text-[0.95rem] font-medium text-muted">{t.specialisedFor}</p>
             <ul className="mt-4 flex flex-wrap justify-center gap-2.5">
-              {specialised.map(({ label, icon: Icon, tone }) => (
+              {specialised.map(({ icon: Icon, tone }, si) => {
+                const label = t.specialised[si];
+                return (
                 <li
                   key={label}
                   className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/90 py-1.5 pl-1.5 pr-4 text-[0.95rem] font-medium text-ink/85 shadow-card"
@@ -114,15 +114,18 @@ export function Hero() {
                   </span>
                   {label}
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </div>
         </div>
       </section>
 
-      <section aria-label="Why patients trust Thraya" className="bg-forest-deep text-white">
+      <section aria-label={t.trustAria} className="bg-forest-deep text-white">
         <dl className="container-page grid grid-cols-2 lg:grid-cols-4">
-          {trust.map(({ icon: Icon, value, label }, i) => (
+          {t.trust.map(({ value, label }, i) => {
+            const Icon = trustIcons[i];
+            return (
             <div
               key={value}
               className={`flex flex-col items-center gap-3 px-3 py-9 text-center sm:py-11 ${
@@ -133,7 +136,8 @@ export function Hero() {
               <dt className="display text-[1.35rem] leading-tight sm:text-[1.7rem]">{value}</dt>
               <dd className="text-[0.9rem] text-white/65 sm:text-[0.95rem]">{label}</dd>
             </div>
-          ))}
+            );
+          })}
         </dl>
       </section>
     </>

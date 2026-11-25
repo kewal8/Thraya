@@ -58,6 +58,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 | Route | Status |
 | --- | --- |
 | `/` | Live homepage (client direction, alomcare-style) |
+| `/kn` | The same homepage in Kannada (draft translation, needs a native speaker's review) |
 | `/v1` | Copy 1: the current warm direction refined (no labels above headings, two-tone only in the hero, grouped ruled condition lists, Body/Mind/Spirit as words in the logo colours, ruled rows instead of icon-card grids, numbered step timeline, Gambetta headings). Review only, `noindex` |
 | `/v2` | Copy 2: new visual world "The Clinic Card": the page as the family's OP card; coloured card stocks on a sage ground, forest ink, violet rubber stamps (only for stamps and chosen states), index tabs, forest-ink duotone photos, a stamp that lands when booking. Erode headings. Review only, `noindex` |
 | `/draft` | Alternative full redesign (Hallmark "Atelier" direction, brand kept). Review only, `noindex` |
@@ -65,7 +66,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 | `/fonts` | Heading-font comparison. Review only; delete before launch |
 
 ### Homepage sections (in order)
-1. **Nav:** floating white pill; logo, links (Approach, What We Treat, Your Doctor, FAQ, Location), "Call us" (phone icon only on mobile), "Book a consultation"; mobile menu adds a WhatsApp button.
+1. **Nav:** floating white pill; logo, links (Approach, What We Treat, Your Doctor, FAQ, Location), a language switch pill ("ಕನ್ನಡ" on `/`, "English" on `/kn`; always visible, also on phones), "Call us" (phone icon only on mobile), "Book a consultation"; mobile menu adds a WhatsApp button.
 2. **Hero:** centred on a warm glowing background (radial washes in gold, green and clay) with concentric rings and floating leaf, sprout, flower, tulip and heart icons (desktop only). Text matches the client's mock exactly: headline "Gentle Healing, / Personalised for You" (second line green), serif subline "To Restore Balance, Relieve Symptoms and Support Lasting Health", a soft green pill "for Women, Men, Children & the Entire Family" between two thin lines, then "Individualised care for acute and chronic concerns, led by Dr. Ardhra C."; buttons "Book a consultation" and "Explore our services"; "Specialised care for" pills (Women's Health, Children's Health, PCOD / PCOS, Allergies, Skin & hair). Extra top space under the nav (118px desktop, 74px mobile).
 3. **Trust band:** dark green strip with four facts and gold icons: 10+ years, MD (Hom.), All ages, Germany & France.
 4. **Our approach:** label, two-tone heading "Care that sees / the whole person.", the client's approach copy, then three white cards (Body, Mind, Spirit) with dark green icon tiles.
@@ -98,7 +99,9 @@ src/components/faq.tsx    Accordion (client)
 src/components/booking.tsx    WhatsApp booking form (client)
 src/components/reveal.tsx Scroll fade-in; content stays visible without JavaScript
 src/components/hero-options.tsx  The three hero options for /hero-1..3
-src/lib/site.ts           ALL content and clinic details (edit here first)
+src/lib/site.ts           Clinic details, icons and English list content (edit here first)
+src/lib/content.ts        Homepage words in English and Kannada (getContent(locale)); lists follow site.ts order
+src/app/kn/page.tsx       Kannada homepage; loads Noto Sans/Serif Kannada (Kannada glyphs only)
 src/app/v1/               Copy 1 (own sections, FAQ, booking; CSS scoped to [data-theme="thraya-v1"]; Gambetta from Fontshare CDN)
 src/app/v2/               Copy 2, The Clinic Card (scoped CSS; Erode from Fontshare CDN)
 PRODUCT.md                Product truth for Impeccable (audience, purpose, constraints, evidence)
@@ -121,9 +124,12 @@ README.md                 Developer README
 - **Ascendant Serif personal-use files have blank glyphs** for `& / ( ) + ' ? ! : -`. A `"Heading Symbols"` `@font-face` in `globals.css` (local Georgia, Times or Noto Serif, limited by `unicode-range`) fills them. Remove it once licensed files are in.
 - **Reveal animations** hide content only under the `.js` class set by a `beforeInteractive` script, so the page works with scripts off. A dev-only React warning about the script tag is expected.
 - In the `/draft` CSS, base element rules use `:where(.draft)` so component classes win. (A specificity bug once made the green button's text dark.)
+- **Bilingual homepage:** every homepage component takes `locale` (default "en") and reads words from `getContent(locale)`. New copy must be added to both `en` and `kn` in `src/lib/content.ts`. The `.locale-kn` rules at the end of `globals.css` set Kannada fonts, line heights and smaller display sizes. `<html lang>` stays `en`; the page wrapper carries `lang="kn"`.
 - When screenshotting in a browser, set `document.documentElement.style.scrollBehavior = 'auto'`, or `scrollTo` lands mid-animation.
 
 ## 8. Open items before launch
+
+- [ ] Kannada (`/kn`): have a native Kannada speaker at the clinic review `src/lib/content.ts` (medical wording especially). WhatsApp messages stay in English on purpose
 
 - [ ] Ascendant Serif commercial / web licence and licensed files. The font files are git-ignored (`public/fonts/ascendant/*.otf`), so Vercel builds currently show a fallback serif for headings; once licensed, commit them or serve them from storage
 - [ ] Confirm +91 80892 49962 takes calls
@@ -158,3 +164,4 @@ README.md                 Developer README
 - **2026-11-25** Doctor stock photo removed ahead of going live: the portrait frame is now empty on `/`, `/v1`, `/v2` and `/draft`; Unsplash placeholder notes removed from the footers.
 - **2026-11-25** Why Thraya photo replaced again with the user-supplied globules-and-spoon photo (`public/images/globules-spoon.webp`, `photos.remedies`) on `/`, `/v1` and `/v2`; the remedy-bottles photo was deleted.
 - **2026-11-25** Favicon added: the logo mark cropped from `public/brand/thraya-logo.png` as `src/app/icon.png` (transparent) and `src/app/apple-icon.png` (white); the default Next.js `favicon.ico` was removed. Regenerate from an SVG or high-res logo when one arrives (the source mark is only 83x108px).
+- **2026-11-25** Kannada added: `/kn` renders the homepage in Kannada (draft translation in `src/lib/content.ts`, Noto Sans/Serif Kannada for Kannada glyphs). A language switch pill sits in the nav next to the call button, visible on every screen size. WhatsApp messages stay in English. Hero headline size now scales with the screen below 400px so "Personalised for You" stays on one line at 360px.
