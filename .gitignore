@@ -45,3 +45,7 @@ next-env.d.ts
 /public/fonts/ascendant/*.otf
 /public/fonts/ascendant/*.woff
 /public/fonts/ascendant/*.woff2
+
+# Impeccable local artefacts (review captures, caches)
+/.impeccable/review/
+/.impeccable/hook.cache.json

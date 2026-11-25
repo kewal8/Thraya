@@ -58,6 +58,8 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 | Route | Status |
 | --- | --- |
 | `/` | Live homepage (client direction, alomcare-style) |
+| `/v1` | Copy 1: the current warm direction refined (no labels above headings, two-tone only in the hero, grouped ruled condition lists, Body/Mind/Spirit as words in the logo colours, ruled rows instead of icon-card grids, numbered step timeline, Gambetta headings). Review only, `noindex` |
+| `/v2` | Copy 2: new visual world "The Clinic Card": the page as the family's OP card; coloured card stocks on a sage ground, forest ink, violet rubber stamps (only for stamps and chosen states), index tabs, forest-ink duotone photos, a stamp that lands when booking. Erode headings. Review only, `noindex` |
 | `/draft` | Alternative full redesign (Hallmark "Atelier" direction, brand kept). Review only, `noindex` |
 | `/hero-1`, `/hero-2`, `/hero-3` | Hero options (centred, dark green banner, soft card). Review only; delete before launch |
 | `/fonts` | Heading-font comparison. Review only; delete before launch |
@@ -96,6 +98,10 @@ src/components/booking.tsx    WhatsApp booking form (client)
 src/components/reveal.tsx Scroll fade-in; content stays visible without JavaScript
 src/components/hero-options.tsx  The three hero options for /hero-1..3
 src/lib/site.ts           ALL content and clinic details (edit here first)
+src/app/v1/               Copy 1 (own sections, FAQ, booking; CSS scoped to [data-theme="thraya-v1"]; Gambetta from Fontshare CDN)
+src/app/v2/               Copy 2, The Clinic Card (scoped CSS; Erode from Fontshare CDN)
+PRODUCT.md                Product truth for Impeccable (audience, purpose, constraints, evidence)
+.impeccable/              Impeccable surface briefs (v2 direction contract) and review captures
 src/app/draft/            Self-contained redesign draft (own CSS scoped to [data-theme="thraya-draft"])
 public/images/            Local photos (remedy-bottles.webp)
 public/fonts/ascendant/   Ascendant Serif PERSONAL-USE files (git-ignored, local only) + README
@@ -126,7 +132,10 @@ README.md                 Developer README
 - [ ] Real patient reviews (Google), if available; never invent any
 - [ ] Dr. Ardhra's review of draft copy
 - [ ] Delete review routes: `/draft` (or promote it), `/hero-1..3`, `/fonts`, `src/components/hero-options.tsx`
-- [ ] Decide whether the draft replaces the homepage
+- [ ] Copy 2: decide whether the index-tab section labels stay (client likes labels; design review flags them as eyebrows)
+- [ ] Write DESIGN.md once a direction is chosen (not written yet, so an unchosen world is not recorded as the system)
+- [ ] Decide which of the homepage, Copy 1 (`/v1`), Copy 2 (`/v2`) and `/draft` becomes the site; then delete the rest
+- [ ] Heading font: Copy 1 uses Gambetta and Copy 2 uses Erode (both Fontshare, free for commercial use, loaded from api.fontshare.com). Self-host the chosen one before launch
 
 ## 9. Change log
 
@@ -144,3 +153,4 @@ README.md                 Developer README
 - **2026-11-24** Vercel build failed (font file not found, since the fonts are git-ignored). Switched Ascendant from `next/font/local` to a CSS `@font-face` from `public/fonts/ascendant/`; builds now pass without the files (headings fall back to a serif on Vercel until licensed files are added).
 - **2026-11-24** Hero text replaced with the client's mock copy ("Gentle Healing, Personalised for You", the "To Restore Balance…" subline, the family pill and the shorter description). Layout and buttons unchanged; mobile sizes tuned so each headline line fits on one row from 360px.
 - **2026-11-25** Why Thraya photo replaced: the Unsplash stethoscope-and-globules image became the user-supplied remedy-bottles photo (`public/images/remedy-bottles.webp`, `photos.remedies` in site.ts); its frame is 4:5 on desktop and anchored to the bottom so the bottle and dropper are never cropped.
+- **2026-11-25** Impeccable pass: PRODUCT.md written. Two full redesigns built with the same copy, homepage untouched: Copy 1 at `/v1` (refined warm direction, Gambetta) and Copy 2 at `/v2` ("The Clinic Card", Erode, chosen by the user from an Impeccable direction round). Both went through two independent finish-review rounds; fixes applied. Open: self-hosting the fonts, Copy 2 tab labels, DESIGN.md, picking a direction.

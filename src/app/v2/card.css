@@ -1,0 +1,500 @@
+/*
+  Copy 2: "The Clinic Card". The page is the patient card a family keeps for its doctor:
+  tinted card stocks on a card-file ground, printed in forest-green ink, violet rubber stamps.
+  Everything is scoped to [data-theme="thraya-card"], so no other route is affected.
+*/
+@layer components {
+[data-theme="thraya-card"] {
+  color-scheme: light;
+
+  /* Card stocks and ground */
+  --ground: #dfe5d2;
+  --ground-deep: #cfd8c0;
+  --stock-green: #d3e5c5;
+  --stock-pink: #f4d8cd;
+  --stock-yellow: #f3e3ad;
+  --stock-ink: #1d4a2c;
+  --stock-pale: #eaf0e1;
+
+  /* Inks */
+  --ink: #163b24;
+  --ink-soft: #3f5a47;
+  --ink-faint: #4a5f50; /* >= 5.1:1 on every stock */
+  --rule: rgb(22 59 36 / 0.3);
+  --rule-strong: rgb(22 59 36 / 0.55);
+  --violet: #57398c;
+  --clay: #a3432c;
+  --on-ink-accent: #f3e3ad; /* the yellow stock, reversed out of ink */
+  --on-ink: #f1f4e8;
+  --on-ink-soft: rgb(241 244 232 / 0.74);
+  --on-ink-rule: rgb(241 244 232 / 0.24);
+
+  --card-shadow: 0 1px 1px rgb(22 59 36 / 0.08), 0 18px 36px -22px rgb(22 59 36 / 0.45);
+  --radius: 8px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-title: "Erode", ui-serif, Georgia, serif;
+  --font-body: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  min-height: 100dvh;
+  caret-color: #163b24;
+  scrollbar-color: var(--rule-strong) var(--ground);
+}
+
+[data-theme="thraya-card"] ::selection {
+  background: #163b24;
+  color: var(--on-ink);
+}
+
+[data-theme="thraya-card"] :focus-visible {
+  outline: 2px solid #163b24;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+[data-theme="thraya-card"] a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+/* ---------- Layout ---------- */
+.k-wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) {
+  .k-wrap { padding-inline: 1.5rem; }
+}
+
+.k-section {
+  padding-block: 3.5rem;
+}
+@media (min-width: 768px) {
+  .k-section { padding-block: 5.5rem; }
+}
+
+/* ---------- Type ---------- */
+.k-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+.k-h1 { font-size: clamp(2.35rem, 5.2vw + 0.6rem, 5.25rem); line-height: 1.02; }
+.k-h2 { font-size: clamp(2rem, 2.6vw + 1rem, 3.4rem); }
+.k-h3 { font-size: clamp(1.3rem, 0.6vw + 1.05rem, 1.6rem); line-height: 1.15; }
+.k-sub {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.2rem, 1vw + 0.95rem, 1.75rem);
+  line-height: 1.3;
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+.k-body { font-size: 1.0625rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+.k-lead { font-size: 1.125rem; line-height: 1.65; color: var(--ink); }
+.k-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-faint);
+  line-height: 1.3;
+}
+
+/* ---------- The card ---------- */
+.k-card {
+  --stock: var(--stock-green);
+  position: relative;
+  background: var(--stock);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem 1.25rem;
+}
+@media (min-width: 640px) {
+  .k-card { padding: 2.25rem 2.25rem; }
+}
+@media (min-width: 1024px) {
+  .k-card { padding: 3rem 3.25rem; }
+}
+.k-card--pink { --stock: var(--stock-pink); }
+.k-card--yellow { --stock: var(--stock-yellow); }
+.k-card--pale { --stock: var(--stock-pale); }
+.k-card--ink {
+  --stock: var(--stock-ink);
+  --ink: var(--on-ink);
+  --ink-soft: var(--on-ink-soft);
+  --ink-faint: rgb(241 244 232 / 0.72);
+  --rule: var(--on-ink-rule);
+  --rule-strong: rgb(241 244 232 / 0.45);
+  color: var(--on-ink);
+}
+
+/* The file punch on the card's top edge: the ground shows through */
+.k-card--punched::before {
+  content: "";
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--ground);
+  box-shadow: inset 0 2px 3px rgb(22 59 36 / 0.4), inset 0 -1px 0 rgb(255 255 255 / 0.35);
+}
+@media (min-width: 640px) {
+  .k-card--punched::before { top: 1.1rem; right: 1.25rem; }
+}
+
+/* Index tab: part of the card's silhouette, in the card's own stock. Each card's tab sits at a
+   different place along the top edge, like cards stacked in a file. */
+.k-tabbed { position: relative; margin-top: 2.5rem; }
+.k-tab {
+  --tab-x: 1.25rem;
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: var(--tab-x);
+  display: inline-flex;
+  align-items: center;
+  height: 2.4rem;
+  padding: 0 1.15rem;
+  background: var(--stock);
+  border-radius: 10px 10px 0 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+/* Concave fillets where the tab meets the card's top edge */
+.k-tab::before,
+.k-tab::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+}
+.k-tab::before {
+  right: 100%;
+  background: radial-gradient(circle at 0 0, transparent 9.5px, var(--stock) 10px);
+}
+.k-tab::after {
+  left: 100%;
+  background: radial-gradient(circle at 100% 0, transparent 9.5px, var(--stock) 10px);
+}
+.k-tab--1 { --tab-x: 3.25rem; }
+.k-tab--2 { --tab-x: 5.25rem; }
+@media (min-width: 640px) {
+  .k-tab { --tab-x: 2.25rem; }
+  .k-tab--1 { --tab-x: 30%; }
+  .k-tab--2 { --tab-x: 58%; }
+}
+@media (min-width: 1024px) {
+  .k-tab { --tab-x: 3.25rem; }
+  .k-tab--1 { --tab-x: 34%; }
+  .k-tab--2 { --tab-x: 66%; }
+}
+/* Tabs on the narrow department cards */
+.k-tab--card { --tab-x: 1.25rem; }
+.k-tab--card.k-tab--1 { --tab-x: 3rem; }
+.k-tab--card.k-tab--2 { --tab-x: 4.75rem; }
+@media (min-width: 640px) {
+  .k-tab--card { --tab-x: 1.75rem; }
+  .k-tab--card.k-tab--1 { --tab-x: 18%; }
+  .k-tab--card.k-tab--2 { --tab-x: 32%; }
+}
+@media (min-width: 1024px) {
+  .k-tab--card.k-tab--1 { --tab-x: 1.75rem; }
+  .k-tab--card.k-tab--2 { --tab-x: 1.75rem; }
+}
+
+/* Ruled rows and boxed fields */
+.k-rule { border-top: 1px solid var(--rule); }
+.k-rows > * + * { border-top: 1px solid var(--rule); }
+.k-boxes {
+  display: grid;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+}
+.k-boxes > * { padding: 0.9rem 1rem; min-width: 0; }
+
+/* ---------- Stamp ---------- */
+.k-stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.55rem 0.95rem 0.6rem;
+  border: 2.5px solid var(--violet);
+  border-radius: 6px;
+  outline: 1px solid var(--violet);
+  outline-offset: 3px;
+  color: var(--violet);
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(-5deg);
+  /* Uneven ink coverage and a slight bleed, from the inline SVG filter on the page */
+  filter: url(#k-ink);
+  opacity: 0.92;
+  user-select: none;
+}
+.k-stamp__big { font-size: 1.35rem; letter-spacing: 0.01em; }
+
+/* The doctor's stamp on the hero card: on phones it sits under the subline, on wide
+   screens it lands across the right of the title area like a real stamp on a card. */
+.k-stamp--hero { margin-top: 1.5rem; }
+.k-stamp--hero { padding: 0.75rem 1.3rem 0.8rem; border-width: 3px; }
+.k-stamp--hero .k-stamp__big { font-size: clamp(1.6rem, 1.6vw + 1.1rem, 2.7rem); }
+.k-stamp--hero .k-stamp__small { font-size: clamp(0.9rem, 0.4vw + 0.75rem, 1.2rem); }
+@media (min-width: 1024px) {
+  .k-stamp--hero { position: absolute; right: 2rem; top: 50%; margin-top: -3.5rem; }
+}
+
+/* Printed head of the card: the clinic's name over a double rule */
+.k-cardhead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding-bottom: 0.85rem;
+  padding-right: 2.75rem;
+  border-bottom: 3px double var(--rule-strong);
+}
+.k-stamp__small { font-size: 0.8rem; font-weight: 600; }
+
+@keyframes k-stamp-settle {
+  0% { opacity: 0.6; transform: rotate(-7deg) scale(1.06); }
+  70% { opacity: 0.95; transform: rotate(-4.6deg) scale(0.99); }
+  100% { opacity: 0.92; transform: rotate(-5deg) scale(1); }
+}
+@keyframes k-stamp-land {
+  0% { opacity: 0.4; transform: rotate(-11deg) scale(1.22); }
+  70% { opacity: 0.95; transform: rotate(-4deg) scale(0.97); }
+  100% { opacity: 0.92; transform: rotate(-5deg) scale(1); }
+}
+.k-stamp--settle { animation: k-stamp-settle 520ms var(--ease-out) 350ms both; }
+.k-stamp--land { animation: k-stamp-land 420ms var(--ease-out) both; }
+.k-stamp--line { flex-direction: row; padding: 0.3rem 0.75rem 0.35rem; border-width: 2px; outline-offset: 2px; transform: rotate(-2.5deg); }
+.k-stamp--line .k-stamp__big { font-size: 1.05rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .k-stamp--settle,
+  .k-stamp--land { animation: none; }
+}
+
+/* ---------- Controls ---------- */
+.k-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3.25rem;
+  padding: 0 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out), border-color 160ms var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.k-btn:active { transform: translateY(1px); }
+.k-btn--ink { background: #163b24; color: #f1f4e8; }
+.k-btn--ink:hover { background: #0f2c1a; }
+.k-btn--line { border: 1.5px solid var(--ink); color: var(--ink); background: transparent; }
+.k-btn--line:hover { background: rgb(22 59 36 / 0.07); }
+.k-btn--paper { background: var(--on-ink); color: #163b24; }
+.k-btn--paper:hover { background: #ffffff; }
+.k-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.k-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  transition: text-decoration-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+.k-link:hover { text-decoration-color: currentColor; }
+.k-link svg { transition: transform 200ms var(--ease-out); }
+.k-link:hover svg { transform: translateX(2px); }
+
+/* Ruled inputs: you write on the card's line */
+.k-input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.5rem 0.1rem;
+  border: 0;
+  border-bottom: 1.5px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.0625rem;
+  border-radius: 0;
+  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.k-input:hover { border-bottom-color: var(--ink); }
+.k-input:focus-visible {
+  outline: none;
+  border-bottom-color: #163b24;
+  background: rgb(22 59 36 / 0.06);
+}
+.k-input[aria-invalid="true"] { border-bottom-color: var(--clay); }
+textarea.k-input { resize: vertical; line-height: 2rem; min-height: 6rem;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--rule) calc(2rem - 1px), var(--rule) 2rem);
+  background-attachment: local;
+  border-bottom: 0;
+}
+
+/* Concern chips: the chosen one is inked solid, the rest stay dotted */
+.k-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.k-chip label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem;
+  border: 1.5px dotted var(--rule-strong);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.k-chip label:hover { border-color: var(--ink); color: var(--ink); }
+.k-chip input:checked + label {
+  border-style: solid;
+  border-color: var(--violet);
+  background: var(--violet);
+  color: #f6f2fb;
+}
+.k-chip input:focus-visible + label { outline: 2px solid #163b24; outline-offset: 2px; }
+
+/* ---------- Header strip ---------- */
+.k-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+}
+.k-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 4.25rem;
+}
+.k-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.7rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.k-nav a:hover { color: var(--ink); background: rgb(22 59 36 / 0.06); }
+
+/* No-JS menu for phones */
+.k-menu > summary { list-style: none; cursor: pointer; }
+.k-menu > summary::-webkit-details-marker { display: none; }
+.k-menu[open] .k-menu__open { display: none; }
+.k-menu:not([open]) .k-menu__close { display: none; }
+.k-menu__panel {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  top: calc(100% + 0.5rem);
+  background: var(--stock-green);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+.k-menu__panel a.k-menu__link {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  font-size: 1.05rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ---------- Accordion (native details) ---------- */
+.k-faq > summary { list-style: none; cursor: pointer; }
+.k-faq > summary::-webkit-details-marker { display: none; }
+.k-faq__mark { transition: transform 220ms var(--ease-out); }
+.k-faq[open] .k-faq__mark { transform: rotate(45deg); }
+
+/* ---------- Photos printed as forest-ink duotones: ink shadows, card-stock highlights ---------- */
+.k-print {
+  position: relative;
+  overflow: hidden;
+  background: var(--print-paper, var(--stock-pale));
+  isolation: isolate;
+}
+.k-print img {
+  filter: grayscale(1) contrast(1.12) brightness(1.06);
+  mix-blend-mode: multiply;
+}
+.k-print::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--print-ink, #24653a);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+/* The portrait, mounted on the card like an ID photo */
+.k-mounted {
+  background: var(--stock-pale);
+  padding: 0.55rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+}
+
+/* The map sits square in a ruled frame */
+.k-map {
+  position: relative;
+  min-height: 20rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Floating WhatsApp button */
+.k-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #163b24;
+  color: #f1f4e8;
+  box-shadow: 0 0 0 3px var(--ground), 0 10px 26px -8px rgb(22 59 36 / 0.6);
+  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.k-fab:hover { background: #0f2c1a; transform: translateY(-2px); }
+@media (min-width: 640px) {
+  .k-fab { right: 1.5rem; bottom: 1.5rem; }
+}
+
+}

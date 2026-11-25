@@ -1,0 +1,79 @@
+/*
+  Copy 1: the current warm direction, refined. Scoped to [data-theme="thraya-v1"] so the
+  homepage and other routes are untouched. Heading face: Gambetta (Fontshare, ITF Free Font
+  Licence, free for commercial web use).
+*/
+[data-theme="thraya-v1"] {
+  --v1-heading: "Gambetta", ui-serif, Georgia, serif;
+  --v1-rule: color-mix(in oklab, var(--color-forest) 16%, transparent);
+  --v1-rule-dark: color-mix(in oklab, white 16%, transparent);
+}
+
+[data-theme="thraya-v1"] .title {
+  font-family: var(--v1-heading);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+[data-theme="thraya-v1"] .title-sm {
+  font-family: var(--v1-heading);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+[data-theme="thraya-v1"] .lede {
+  font-family: var(--v1-heading);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+[data-theme="thraya-v1"] p {
+  text-wrap: pretty;
+}
+
+/* Hero glow, without the concentric rings. */
+[data-theme="thraya-v1"] .v1-wash {
+  background:
+    radial-gradient(60% 50% at 50% 0%, var(--color-gold-soft), transparent 72%),
+    radial-gradient(45% 50% at 0% 100%, var(--color-leaf-soft), transparent 70%),
+    radial-gradient(40% 45% at 100% 90%, var(--color-clay-soft), transparent 70%),
+    var(--color-paper);
+}
+
+/* A row that is one big link: the whole condition is the target, the arrow answers hover. */
+[data-theme="thraya-v1"] .v1-row {
+  transition: background-color 250ms var(--ease-out-soft);
+}
+[data-theme="thraya-v1"] .v1-row:hover {
+  background-color: color-mix(in oklab, var(--color-surface) 70%, transparent);
+}
+[data-theme="thraya-v1"] .v1-row .v1-arrow {
+  transition: transform 250ms var(--ease-out-soft);
+}
+[data-theme="thraya-v1"] .v1-row:hover .v1-arrow {
+  transform: translateX(3px);
+}
+
+[data-theme="thraya-v1"] .v1-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+  transition: text-decoration-color 200ms ease;
+}
+[data-theme="thraya-v1"] .v1-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Shared components (nav menu) use .display: give them this copy's face. */
+[data-theme="thraya-v1"] .display {
+  font-family: var(--v1-heading);
+}
