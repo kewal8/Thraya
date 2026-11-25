@@ -59,7 +59,7 @@ export const photos = {
   family: photo("1624434070018-4a74c7d91715"),
   motherDaughter: photo("1589169011402-8b2cbd1ee593"),
   grandmotherBaby: photo("1768657891765-2c5619ba1914"),
-  globules: photo("1584982751601-97dcc096659c"),
+  remedies: "/images/remedy-bottles.webp",
   doctor: photo("1757125736482-328a3cdd9743"),
 };
 
