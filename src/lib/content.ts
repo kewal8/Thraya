@@ -146,7 +146,6 @@ const en = {
     h1: "Visit",
     h2: " the clinic.",
     directions: "Get directions",
-    showMap: "Show map",
     mapTitle: (name: string) => `Map showing ${name}`,
   },
   footer: {
@@ -360,7 +359,6 @@ const kn: Content = {
     h1: "ಕ್ಲಿನಿಕ್‌ಗೆ",
     h2: " ಭೇಟಿ ನೀಡಿ.",
     directions: "ದಾರಿ ತೋರಿಸಿ",
-    showMap: "ನಕ್ಷೆ ತೋರಿಸಿ",
     mapTitle: (name: string) => `${name} ಇರುವ ನಕ್ಷೆ`,
   },
   footer: {

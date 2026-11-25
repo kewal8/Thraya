@@ -76,7 +76,7 @@ All of these live in `src/lib/site.ts`. Empty fields are hidden on the page, nev
 8. **Your first visit:** four step cards (Book, Talk, Begin treatment, Review) with numbered icon circles on a gold wash.
 9. **FAQ:** two-tone heading, card-style accordion, and a dark "Still have a question?" card with an "Ask on WhatsApp" button.
 10. **Booking:** two-panel card; dark green left panel (reassurances, "Call or WhatsApp" number), and a form (name, phone, concern, message) that opens WhatsApp with the request filled in.
-11. **Location:** "Visit the clinic." with the address, "Get directions" and a Google map that loads only when the visitor taps "Show map".
+11. **Location:** "Visit the clinic." with the address, "Get directions" and an embedded Google map that lazy-loads as the visitor scrolls near it.
 12. **Footer:** dark green; logo, links, contact ("Call or WhatsApp"), copyright, disclaimer, photo note, "Designed and developed by Kewal" (right).
 13. A floating WhatsApp button (bottom right) opens a chat directly.
 
@@ -93,7 +93,6 @@ src/app/page.tsx          Homepage: <HomePage hero={<Hero />} />
 src/app/globals.css       Hallmark stamp, tokens, hero wash/rings/floaters, section labels, buttons, reveal, reduced motion
 src/components/home-page.tsx  Nav + sections + footer + floating WhatsApp button
 src/components/nav.tsx    Floating pill nav (client component; mobile menu animates with CSS grid rows, no Motion)
-src/components/map-embed.tsx  Tap-to-load Google Map (placeholder until "Show map"; saves ~1 MB)
 src/components/hero.tsx   Hero + trust band (server component, CSS-only entrance)
 src/components/sections.tsx   Approach, Conditions, Medicines (Why Thraya), Doctor, Visit, Location, Footer
 src/components/faq.tsx    Accordion (client)
@@ -126,7 +125,7 @@ README.md                 Developer README
 - **Reveal animations** hide content only under the `.js` class set by a `beforeInteractive` script, so the page works with scripts off. A dev-only React warning about the script tag is expected.
 - In the `/draft` CSS, base element rules use `:where(.draft)` so component classes win. (A specificity bug once made the green button's text dark.)
 - **Bilingual homepage:** every homepage component takes `locale` (default "en") and reads words from `getContent(locale)`. New copy must be added to both `en` and `kn` in `src/lib/content.ts`. The `.locale-kn` rules at the end of `globals.css` set Kannada fonts, line heights and smaller display sizes. `<html lang>` stays `en`; the page wrapper carries `lang="kn"`.
-- **Performance:** the Motion library was removed (the nav menu uses CSS), images are WebP and `next.config.ts` serves AVIF/WebP, below-the-fold images lazy-load (next/image default; only the nav logo is preloaded), and the map loads on tap. Measured on the local production build at phone size: about 300 KB before scrolling (was 357 KB), 183 KB of it JavaScript (was 223 KB).
+- **Performance:** the Motion library was removed (the nav menu uses CSS), images are WebP and `next.config.ts` serves AVIF/WebP, below-the-fold images lazy-load (next/image default; only the nav logo is preloaded), and the map iframe lazy-loads (loading="lazy"; the user prefers the map always visible over a tap-to-load placeholder). Measured on the local production build at phone size: about 300 KB before scrolling (was 357 KB), 183 KB of it JavaScript (was 223 KB).
 - **Caching:** `next.config.ts` sends a 30-day browser cache for `public/fonts`, `public/brand` and `public/images`, and keeps optimised images for 31 days (`images.minimumCacheTTL`). Neither can be purged, so **to replace a photo, logo or font file, save it under a new file name** and update the reference. Pages and `_next/static` files refresh on every deploy.
 - When screenshotting in a browser, set `document.documentElement.style.scrollBehavior = 'auto'`, or `scrollTo` lands mid-animation.
 
@@ -170,3 +169,4 @@ README.md                 Developer README
 - **2026-11-25** Kannada added: `/kn` renders the homepage in Kannada (draft translation in `src/lib/content.ts`, Noto Sans/Serif Kannada for Kannada glyphs). A language switch pill sits in the nav next to the call button, visible on every screen size. WhatsApp messages stay in English. Hero headline size now scales with the screen below 400px so "Personalised for You" stays on one line at 360px.
 - **2026-11-25** Speed pass: removed Motion (nav menu now CSS), Google Map loads on tap ("Show map") on `/` and `/v1`, logo converted to WebP (28 KB to 15 KB), globules photo recompressed (92 KB to 47 KB), AVIF/WebP enabled in `next.config.ts`, logo `sizes` set. First view on phones went from about 357 KB to 303 KB, plus about 1 MB saved when scrolling past the map.
 - **2026-11-25** Caching: 30-day `Cache-Control` for files in `public/fonts`, `public/brand`, `public/images`; optimised images cached 31 days. Replace those files by renaming them.
+- **2026-11-25** Tap-to-load map removed at the user's request: the Google map shows directly again, lazy-loaded as the visitor scrolls near it.
